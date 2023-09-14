@@ -31,6 +31,7 @@ function App() {
       <HashRouter>
         <Routes>
           <Route exact path="/" element={<HomePage/>}/>
+          <Route path="/land" element={<Splash/>}/>
           <Route path="/login" element={<LoginPage/>}/>
           <Route path="/favourite" element={<FavouritePage/>}/>
           <Route path="/settings" element={<SettingsPage/>}/>

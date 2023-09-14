@@ -11,7 +11,7 @@ export default function SearchAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed" color='background'>
         <Toolbar>
-          <img src='./logo2.png' style={{height:50}}/>
+          <img src='./logo1.png' style={{height:23}}/>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}/>
           <IconButton
             size="large"

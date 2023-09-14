@@ -4,9 +4,16 @@
     margin: auto;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
 }
 
 .splashLogo{
+    margin-top: 45%;
     width: 100%;
+}
+
+.splashIcon{
+    width: 60px;
+    margin: 10px;
+    align-self: center;
 }
