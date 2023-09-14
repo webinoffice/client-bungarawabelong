@@ -9,6 +9,9 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import Divider from '@mui/material/Divider';
+import { TextField, Button } from '@mui/material';
+import Avatar from '@mui/material/Avatar';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -23,6 +26,13 @@ const images = [
       'https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60',
   },
 ];
+const shop = [
+    {
+        imgPath:
+            'https://www.w3schools.com/w3images/avatar2.png',
+        shopName: 'Toko Bunga',
+    }
+]
 
 function ProductDetailPage() {
   const theme = useTheme();
@@ -99,6 +109,71 @@ function ProductDetailPage() {
             {images[0].description}
         </Typography>
         <Divider/>
+
+        <div style={{
+            display: 'flex',
+            margin: '20px',
+            justifyContent: 'space-between'
+        }}>
+            <div style={{display: 'flex'}}>
+                <Avatar alt="Remy Sharp" src={shop[0].imgPath} sx={{
+                    height: '50px',
+                    width: '50px'
+                }} />
+                <Typography gutterBottom color='primary' sx={{
+                    fontWeight:"bold", 
+                    fontSize: 18,
+                    marginBottom: 'auto',
+                    marginTop: 'auto',
+                    marginLeft: '20px'
+                }}>
+                    {shop[0].shopName}
+                </Typography>
+            </div>
+            <IconButton>
+                <ArrowForwardIcon color='primary'></ArrowForwardIcon>
+            </IconButton>
+        </div>
+
+
+        <Divider/>
+        <Typography gutterBottom color='primary' sx={{
+            fontWeight:"bold", 
+            fontSize: 18,
+            marginBottom: 'auto',
+            marginTop: '10px',
+            marginLeft: '20px',
+            marginRight: '20px',
+        }}>
+            Form Pemesanan
+        </Typography>
+        <form style={{
+            marginBottom: 'auto',
+            marginTop: '10px',
+            marginLeft: '20px',
+            marginRight: '20px',
+        }}>
+            <TextField
+                style={{ width: "100%", marginBottom: "10px"}}
+                type="text"
+                label="Nama"
+                variant="outlined"
+            />
+            <br />
+            <TextField
+                style={{ width: "100%", marginBottom: "20px" }}
+                type="text"
+                label="No. Telepon"
+                variant="outlined"
+            />
+            <br />
+            <Button variant="contained" color="primary" style={{
+                width: "100%", marginBottom: "10px"
+            }}>
+                Pesan Sekarang
+            </Button>
+            <div style={{height: '50px'}}/>
+        </form>
     </div>
   );
 }

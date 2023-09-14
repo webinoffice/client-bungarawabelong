@@ -6,6 +6,9 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import FavouritePage from './assets/pages/favouritePage';
 import SettingsPage from './assets/pages/settingsPage';
 import ProductDetailPage from './assets/pages/productDetailPage';
+import ProductPage from './assets/pages/productPage';
+import ShopDetailPage from './assets/pages/shopDetailPage';
+import LoginPage from './assets/pages/loginPage';
 
 const theme = createTheme({
   palette: {
@@ -28,9 +31,12 @@ function App() {
       <HashRouter>
         <Routes>
           <Route exact path="/" element={<HomePage/>}/>
+          <Route path="/login" element={<LoginPage/>}/>
           <Route path="/favourite" element={<FavouritePage/>}/>
           <Route path="/settings" element={<SettingsPage/>}/>
+          <Route path='/product' element={<ProductPage/>}/>
           <Route path='/detail' element={<ProductDetailPage/>}/>
+          <Route path='/shop' element={<ShopDetailPage/>}/>
         </Routes>
       </HashRouter>
     </ThemeProvider>
