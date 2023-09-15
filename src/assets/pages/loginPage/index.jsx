@@ -1,9 +1,27 @@
 import * as React from 'react';
 import css from "./loginPage.module.css";
 import { Typography, TextField, Button } from '@mui/material';
-
+import axios from 'axios';
+import { useState } from "react";
 
 function LoginPage() {
+    const [email,setEmail] = useState('')
+    const [password,setPassword] = useState('')
+ 
+    const handleSubmit = async (e) => {
+        try {
+            e.preventDefault();
+            const response = await axios.post('http://localhost:8081/login', {email, password});
+            if (response.data === "sukses") {
+                console.log("berhasil login");
+            } else {
+                console.log("gagal login");
+            }
+        } catch (error) {
+            console.log("ambil data gagal");
+        }
+    }
+
     return ( 
         <div className={css.topPallete}> 
             <div style={{
@@ -23,12 +41,13 @@ function LoginPage() {
                     marginTop: '10px',
                     marginLeft: '20px',
                     marginRight: '20px',
-                }}>
+                }}onSubmit={handleSubmit}>
                     <TextField
                         style={{ width: "100%", marginBottom: "10px"}}
                         type="email"
                         label="E-Mail"
                         variant="outlined"
+                        onChange={e => setEmail(e.target.value)}
                     />
                     <br />
                     <TextField
@@ -36,9 +55,10 @@ function LoginPage() {
                         type="password"
                         label="Password"
                         variant="outlined"
+                        onChange={e => setPassword(e.target.value)}
                     />
                     <br />
-                    <Button variant="contained" color="primary" style={{
+                    <Button variant="contained" color="primary" type='submit' style={{
                         width: "100%", marginBottom: "10px"
                     }}>
                         Masuk
