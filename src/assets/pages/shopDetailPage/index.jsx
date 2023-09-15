@@ -13,6 +13,9 @@ import { TextField, Button } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import FavouriteMap from '../../components/favouriteMap';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -32,7 +35,11 @@ const shop = [
         imgPath:
             'https://www.w3schools.com/w3images/avatar2.png',
         shopName: 'Toko Bunga',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
+        shopAddress: 'Jl. Gamon Gacor',
+        shopPhone: "0812292929",
+        shopDescription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
+        bankName: "BCA",
+        bankNum: "7627363726",
     }
 ]
 
@@ -73,8 +80,54 @@ function ShopDetailPage() {
             marginLeft: '20px',
             marginRight: '20px',
         }}>
-            {shop[0].description}
+            {shop[0].shopDescription}
         </Typography>
+        <Divider/>
+        <div style={{
+            display:"flex", 
+            marginLeft: '20px', 
+            marginRight: '20px', 
+            marginTop: '10px', 
+            marginBottom: '10px'
+        }}>
+            <LocationOnIcon sx={{marginRight:'10px'}}/>
+            <Typography variant="body2" color="text.secondary" sx={{
+                alignSelf: 'center',
+                fontWeight: 'bold'
+            }}>
+                {shop[0].shopAddress}
+            </Typography>
+        </div>
+        <div style={{
+            display:"flex", 
+            marginLeft: '20px', 
+            marginRight: '20px', 
+            marginTop: '10px', 
+            marginBottom: '10px'
+        }}>
+            <PhoneAndroidIcon sx={{marginRight:'10px'}}/>
+            <Typography variant="body2" color="text.secondary" sx={{
+                alignSelf: 'center',
+                fontWeight: 'bold'
+            }}>
+                {shop[0].shopPhone}
+            </Typography>
+        </div>
+        <div style={{
+            display:"flex", 
+            marginLeft: '20px', 
+            marginRight: '20px', 
+            marginTop: '10px', 
+            marginBottom: '10px'
+        }}>
+            <AccountBalanceIcon sx={{marginRight:'10px'}}/>
+            <Typography variant="body2" color="text.secondary" sx={{
+                alignSelf: 'center',
+                fontWeight: 'bold'
+            }}>
+                {shop[0].bankName} - {shop[0].bankNum}
+            </Typography>
+        </div>
         <Divider/>
         <Typography gutterBottom sx={{
                 fontWeight:"bold", 

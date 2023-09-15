@@ -1,5 +1,5 @@
 import * as React from 'react';
-import css from "./profilePage.module.css";
+import css from "./addProductPage.module.css";
 import PageAppBar from '../../components/pageAppBar';
 import { Avatar, Typography, IconButton, Button, Divider, TextField } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -19,7 +19,7 @@ const shop = [
     }
 ]
 
-function ProfilePage() {
+function AddProductPage() {
     return ( 
         <div className={css.topPallete}>
             <PageAppBar/>
@@ -29,7 +29,7 @@ function ProfilePage() {
                 maxWidth: '500px',
                 margin: 2
             }}>
-                Profil Toko
+                Tambah Produk
             </Typography>
             <div style={{
                 display: 'flex',
@@ -116,4 +116,4 @@ function ProfilePage() {
     );
 }
 
-export default ProfilePage;
+export default AddProductPage;

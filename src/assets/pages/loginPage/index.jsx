@@ -13,12 +13,12 @@ function LoginPage() {
             e.preventDefault();
             const response = await axios.post('http://localhost:8081/login', {email, password});
             if (response.data === "sukses") {
-                console.log("berhasil login");
+                console.log("Berhasil Masuk");
             } else {
-                console.log("gagal login");
+                console.log("Gagal Masuk");
             }
         } catch (error) {
-            console.log("ambil data gagal");
+            console.log("Gagal Mengambil Data");
         }
     }
 

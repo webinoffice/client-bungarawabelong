@@ -9,6 +9,8 @@ import ProductDetailPage from './assets/pages/productDetailPage';
 import ProductPage from './assets/pages/productPage';
 import ShopDetailPage from './assets/pages/shopDetailPage';
 import LoginPage from './assets/pages/loginPage';
+import ProfilePage from './assets/pages/profilePage';
+import AddProductPage from './assets/pages/addProductPage';
 
 const theme = createTheme({
   palette: {
@@ -38,6 +40,8 @@ function App() {
           <Route path='/product' element={<ProductPage/>}/>
           <Route path='/detail' element={<ProductDetailPage/>}/>
           <Route path='/shop' element={<ShopDetailPage/>}/>
+          <Route path="/profile" element={<ProfilePage/>}/>
+          <Route path="/add-product" element={<AddProductPage/>}/>
         </Routes>
       </HashRouter>
     </ThemeProvider>
