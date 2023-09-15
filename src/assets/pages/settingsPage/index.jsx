@@ -5,6 +5,7 @@ import SearchAppBar from '../../components/searchAppBar';
 import SettingsMenu from '../../components/settingsMenu';
 import { Typography } from '@mui/material';
 
+const step = 2;
 function SettingsPage() {
     return (
         <div className={css.topPallete}>
@@ -18,7 +19,7 @@ function SettingsPage() {
                 Pengaturan
             </Typography>
             <SettingsMenu/>
-            <NavigationBar/>
+            <NavigationBar para={step}/>
         </div>
     );
 }

@@ -5,6 +5,8 @@ import SearchAppBar from '../../components/searchAppBar';
 import FavouriteMap from '../../components/favouriteMap';
 import { Typography } from '@mui/material';
 
+const step = 1;
+
 function FavouritePage() {
     return (
         <div className={css.topPallete}>
@@ -18,7 +20,7 @@ function FavouritePage() {
                 Produk Favorit
             </Typography>
             <FavouriteMap/>
-            <NavigationBar/>
+            <NavigationBar para={step}/>
         </div>
     );
 }

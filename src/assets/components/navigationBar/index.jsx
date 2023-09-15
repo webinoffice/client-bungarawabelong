@@ -7,9 +7,9 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { useNavigate } from 'react-router-dom';
 
-export default function NavigationBar() {
+export default function NavigationBar({para}) {
   const navigate = useNavigate();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(para);
   
   const handleChange = () => {
     if (value === 0){

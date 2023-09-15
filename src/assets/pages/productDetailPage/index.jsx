@@ -161,9 +161,15 @@ function ProductDetailPage() {
             />
             <br />
             <TextField
-                style={{ width: "100%", marginBottom: "20px" }}
+                style={{ width: "100%", marginBottom: "10px" }}
                 type="text"
                 label="No. Telepon"
+                variant="outlined"
+            />
+            <TextField
+                style={{ width: "100%", marginBottom: "20px" }}
+                type="text"
+                label="Deskripsi"
                 variant="outlined"
             />
             <br />

@@ -8,6 +8,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import InventoryIcon from '@mui/icons-material/Inventory';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 export default function SettingsMenu() {
   return (
@@ -33,6 +34,19 @@ export default function SettingsMenu() {
                 <InventoryIcon color='primary'/>
               </ListItemIcon>
               <ListItemText primary="Kelola Produk" sx={{
+                fontWeight:"bold", 
+                fontSize: 20,
+                }}/>
+            </ListItemButton>
+          </ListItem>
+        </List>
+        <List>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <AddCircleOutlineIcon color='primary'/>
+              </ListItemIcon>
+              <ListItemText primary="Tambah Produk" sx={{
                 fontWeight:"bold", 
                 fontSize: 20,
                 }}/>
