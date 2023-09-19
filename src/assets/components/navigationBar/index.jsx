@@ -28,8 +28,8 @@ export default function NavigationBar({para}) {
         value={value}
         onChange={(event, newValue) => {
           setValue(newValue);
-          handleChange();
           console.log(value);
+          // handleChange();
         }}
       >
         <BottomNavigationAction label="Beranda" icon={<HomeIcon />} />

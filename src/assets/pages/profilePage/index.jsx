@@ -92,6 +92,7 @@ function ProfilePage() {
                     label="Deskripsi Toko"
                     variant="outlined"
                     multiline
+                    minRows={2}
                     defaultValue= {shop[0].shopDescription}
                 />
                 <br />

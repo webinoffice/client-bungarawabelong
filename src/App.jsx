@@ -11,6 +11,7 @@ import ShopDetailPage from './assets/pages/shopDetailPage';
 import LoginPage from './assets/pages/loginPage';
 import ProfilePage from './assets/pages/profilePage';
 import AddProductPage from './assets/pages/addProductPage';
+import NotificationPage from './assets/pages/notificationPage';
 
 const theme = createTheme({
   palette: {
@@ -42,6 +43,7 @@ function App() {
           <Route path='/shop' element={<ShopDetailPage/>}/>
           <Route path="/profile" element={<ProfilePage/>}/>
           <Route path="/add-product" element={<AddProductPage/>}/>
+          <Route path="/notification" element={<NotificationPage/>}/>
         </Routes>
       </HashRouter>
     </ThemeProvider>
