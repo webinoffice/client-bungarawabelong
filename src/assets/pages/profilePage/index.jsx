@@ -6,6 +6,8 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import axios from 'axios';
 import { useState } from "react";
 
+
+
 const shop = [
     {
         imgPath:
@@ -20,7 +22,20 @@ const shop = [
 ]
 
 function ProfilePage() {
+        
+    const [image,setImage] = useState("http://fakeimg.pl/350x200/");
+    const [name,setName] = useState('')
+    const [adress,setAdress] = useState('')
+    const [phone,setPhone] = useState('')
+    const [description,setDescription] = useState('')
+    const [bankname,setBankname] = useState('')
+    const [banknum,setBanknum] = useState('')
+
+
+
+
     return ( 
+
         <div className={css.topPallete}>
             <PageAppBar/>
             <Typography gutterBottom sx={{
