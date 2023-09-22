@@ -43,7 +43,7 @@ export default function HomeMenu() {
             maxWidth: 500,
             borderRadius: 1,
             margin: 3,
-            marginBottom: 10,
+            // marginBottom: 10,
         }}>
             <CardActionArea onClick={handleProduct}>
                 <CardMedia

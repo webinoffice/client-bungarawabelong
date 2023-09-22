@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
@@ -9,14 +10,14 @@ import { useNavigate } from 'react-router-dom';
 
 export default function NavigationBar({para}) {
   const navigate = useNavigate();
-  const [value, setValue] = React.useState(para);
+  const [value, setValue] = useState(para);
   
   const handleChange = () => {
     if (value === 0){
       navigate('/')
     } else if (value === 1){
       navigate('/favourite')
-    } else {
+    } else if(value === 2){
       navigate('/settings')
     }
   };
@@ -28,9 +29,10 @@ export default function NavigationBar({para}) {
         value={value}
         onChange={(event, newValue) => {
           setValue(newValue);
+          handleChange();
           console.log(value);
-          // handleChange();
         }}
+        
       >
         <BottomNavigationAction label="Beranda" icon={<HomeIcon />} />
         <BottomNavigationAction label="Favorit" icon={<FavoriteIcon />} />
