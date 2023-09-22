@@ -72,13 +72,31 @@ function AddProductPage() {
             }}>
                 <img src={image} alt="" style={{
                     width: '100%',
-                    aspectRatio: '1/1'
+                    aspectRatio: '1/1',
+                    objectFit: 'cover'
                 }}/>
             </div>
-            <div>
-                <label htmlFor="formFile" className='form-label'>put image here</label>
-                <input type="file" className='form-control' id="formFile" accept='image/*' onChange={handleUploadChang1} />
-                <button onClick={uploadImage} className='button-btn-primary'>submit</button>
+            <div style={{
+                // width: '100%',
+                marginLeft: '20px',
+                marginRight: '20px'
+            }}>
+                <input
+                    accept="image/*"
+                    style={{ display: 'none' }}
+                    id="raised-button-file"
+                    type="file"
+                    onChange={handleUploadChang1}
+                />
+                <label htmlFor="raised-button-file">
+                    <Button variant="contained" color="primary" component="span" style={{
+                        width: "100%", 
+                        marginTop: "10px",
+                        marginBottom: "10px",
+                    }}>
+                        Upload Gambar
+                    </Button>
+                </label> 
             </div>
             <Divider/>
             <form style={{
