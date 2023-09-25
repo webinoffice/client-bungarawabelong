@@ -12,6 +12,11 @@ import LoginPage from './assets/pages/loginPage';
 import ProfilePage from './assets/pages/profilePage';
 import AddProductPage from './assets/pages/addProductPage';
 import NotificationPage from './assets/pages/notificationPage';
+import {
+  TransitionGroup,
+  CSSTransition
+} from "react-transition-group";
+
 
 const theme = createTheme({
   palette: {
@@ -25,6 +30,9 @@ const theme = createTheme({
     error: {
       main: '#00793F',
     },
+    merah: {
+      main: ''
+    }
   },
 });
 

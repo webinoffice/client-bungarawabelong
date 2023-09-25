@@ -9,14 +9,17 @@ import Divider from '@mui/material/Divider';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import { useNavigate } from 'react-router-dom';
 
 export default function SettingsMenu() {
+  const navigate = useNavigate();
   return (
     <Box sx={{ maxWidth: 500, bgcolor: 'background.paper' }}>
       <nav aria-label="main mailbox folders">
         <List>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={()=> navigate('/profile')}>
               <ListItemIcon>
                 <AccountCircleIcon color='primary'/>
               </ListItemIcon>
@@ -42,11 +45,24 @@ export default function SettingsMenu() {
         </List>
         <List>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={()=> navigate('/add-product')}>
               <ListItemIcon>
                 <AddCircleOutlineIcon color='primary'/>
               </ListItemIcon>
               <ListItemText primary="Tambah Produk" sx={{
+                fontWeight:"bold", 
+                fontSize: 20,
+                }}/>
+            </ListItemButton>
+          </ListItem>
+        </List>
+        <List>
+          <ListItem disablePadding>
+            <ListItemButton onClick={()=> navigate('/notification')}>
+              <ListItemIcon>
+                <NotificationsActiveIcon color='primary'/>
+              </ListItemIcon>
+              <ListItemText primary="Notifikasi Pesanan" sx={{
                 fontWeight:"bold", 
                 fontSize: 20,
                 }}/>

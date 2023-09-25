@@ -8,7 +8,7 @@ function Splash() {
             <div style={{display: "flex", justifyContent: "center", aspectRatio: "initial", marginBottom: '30px' }}>
                 <img src='/logoUBM.jpg' className={css.splashIcon} style={{height:"50px"}}/>
                 <img src='/logoTut.jpg' className={css.splashIcon}/>
-                <img src='/logoMerdeka.jpg' className={css.splashIcon} style={{height:'40px'}}/>
+                <img src='/logoMerdeka1.png' className={css.splashIcon} style={{height:'35px'}}/>
             </div>
         </div>
     );
