@@ -7,6 +7,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import IconButton from '@mui/material/IconButton';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
+import { useNavigate } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -49,11 +50,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchAppBar() {
+  const navigate = useNavigate();
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed" color='background'>
         <Toolbar>
-          <img src='./logo1.png' style={{height:23}}/>
+          <img src='./logo1.png' style={{height:23}} onClick={()=>navigate('/')}/>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}/>
           <Search>
             <SearchIconWrapper>

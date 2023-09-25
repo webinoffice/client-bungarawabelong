@@ -6,6 +6,8 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import axios from 'axios';
 import { useState } from "react";
 import { alignProperty } from '@mui/material/styles/cssUtils';
+import Snackbar from '@mui/material/Snackbar';
+import CloseIcon from '@mui/icons-material/Close';
 // import { use } from '../../../../../server/routes/login';
 
 // const shop = [
@@ -74,6 +76,31 @@ function AddProductPage() {
             }
         }
 
+    const [open, setOpen] = React.useState(false);
+
+    const handleClick = () => {
+        setOpen(true);
+    };
+    
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+        return;
+        }
+    
+        setOpen(false);
+    };
+    const action = (
+        <React.Fragment>
+            <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={handleClose}
+            >
+                <CloseIcon fontSize="small" />
+            </IconButton>
+        </React.Fragment>
+    );
         
 
     return ( 
@@ -161,13 +188,20 @@ function AddProductPage() {
                     />
                 </div>
                 <br />
-                <Button variant="contained" color="primary" type='submit' style={{
-                    width: "100%", marginBottom: "10px"
+                <Button variant="contained" color="primary" onClick={handleClick} type='submit' style={{
+                    width: "100%", marginBottom: "10px" 
                 }}>
                     Upload Produk
                 </Button>
                 <div style={{height: '50px'}}/>
             </form>
+            <Snackbar
+                open={open}
+                autoHideDuration={2000}
+                onClose={handleClose}
+                message="Sukses"
+                action={action}
+            />
         </div>
     );
 }

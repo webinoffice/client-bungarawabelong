@@ -6,17 +6,20 @@ import Typography from '@mui/material/Typography';
 import SearchIcon from '@mui/icons-material/Search';
 import IconButton from '@mui/material/IconButton';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useNavigate } from 'react-router-dom';
 
 export default function PageAppBar() {
+  const navigate = useNavigate();
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed" color='background'>
         <Toolbar>
-            <IconButton
+          <IconButton
             size="large"
             edge="start"
             color="primary"
             aria-label="menu"
+            onClick={()=> navigate(-1)}
             >
             <ArrowBackIcon />
           </IconButton>

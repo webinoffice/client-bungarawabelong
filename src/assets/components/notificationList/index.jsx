@@ -38,12 +38,19 @@ export default function NotificationList() {
     <div>
       {notification.map((data,index)=>(
         <Card sx={{ maxWidth: '100%', marginBottom: '10px' }}>
-          <Typography gutterBottom sx={{
+          <Typography gutterBottom color='primary' sx={{
               fontWeight:"bold", 
               fontSize: 20,
               margin: "10px 20px 0px 20px"
           }}>
-              {data.sender}, {data.phone}
+              {data.productname}
+          </Typography>
+          <Typography gutterBottom sx={{
+              fontWeight:"bold", 
+              fontSize: 18,
+              margin: "0px 20px 0px 20px"
+          }}>
+              Pemesan: {data.sender}, {data.phone}
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{
             margin: "0px 20px 0px 20px"
