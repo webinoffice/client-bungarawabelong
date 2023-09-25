@@ -25,7 +25,10 @@ function AddProductPage() {
 
     const [image,setImage] = useState("http://fakeimg.pl/500x500/");
     const [saveImage, setSaveImage] = useState(null);
-    
+    const [nama, setNama] = useState(null);
+    const [deskripsi, setDeskripsi] = useState(null);
+    const [harga1, setHarga1] = useState(null);
+    const [harga2, setHarga2] = useState(null);
 
         function handleUploadChang1(e){
             console.log(e.target.files[0]);
@@ -39,18 +42,35 @@ function AddProductPage() {
                 console.log("gagal bosku");
             }else{
                 let formData = new FormData();
-                formData.append("photo" , saveImage)
+                formData.append("gambar" , saveImage)
+                formData.append("nama" , nama)
+                formData.append("deskripsi" , deskripsi)
+                formData.append("harga1" , harga1)
+                formData.append("harga2" , harga2)
 
-                fetch("http://localhost:8081/uploads" , {
-                    method: "POST",
-                    body: formData,
-                }).then((res) => res.json()).then(data => {
-                    if(data.status === 'sukses'){
-                        window.location.href = data.image;
-                    }else{
-                        console.log(data.status);
-                    }
+                const config = {     
+                    headers: { 'content-type': 'multipart/form-data' }
+                }
+
+                axios.post("http://localhost:8081/tes", formData, config)
+                .then(response => {
+                    console.log(response);
                 })
+                .catch(error => {
+                    console.log(error);
+                });
+
+                // fetch("http://localhost:8081/uploads" , {
+                //     method: "POST",
+                //     body: formData,
+                // }).then((res) => res.json()).then(data => {
+                //     if(data.status === 'sukses'){
+                //         // window.location.href = data.image;
+                //         console.log("SUKSES");
+                //     }else{
+                //         console.log(data.status);
+                //     }
+                // })
             }
         }
 
@@ -110,6 +130,7 @@ function AddProductPage() {
                     type="text"
                     label="Nama Produk"
                     variant="outlined"
+                    onChange={e => setNama(e.target.value)}
                 />
                 <br />
                 <TextField
@@ -119,6 +140,7 @@ function AddProductPage() {
                     variant="outlined"
                     multiline
                     minRows={2}
+                    onChange={e => setDeskripsi(e.target.value)}
                 />
                 <br />
                 <div style={{display:'flex', justifyContent: "space-between"}}>
@@ -127,6 +149,7 @@ function AddProductPage() {
                         type="text"
                         label="Kisaran Harga"
                         variant="outlined"
+                        onChange={e => setHarga1(e.target.value)}
                     />
                     <span sty>-</span>
                     <TextField
@@ -134,6 +157,7 @@ function AddProductPage() {
                         type="text"
                         label="Kisaran Harga"
                         variant="outlined"
+                        onChange={e => setHarga2(e.target.value)}
                     />
                 </div>
                 <br />
