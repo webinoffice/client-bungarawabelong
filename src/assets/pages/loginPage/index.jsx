@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
 
+
 function LoginPage() {
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
@@ -15,7 +16,7 @@ function LoginPage() {
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
-            const response = await axios.post('http://localhost:8081/login', {email, password});
+            const response = await axios.post('http://localhost:8081/login', { email, password });
             console.log(response.data);
             handleClick();
                 

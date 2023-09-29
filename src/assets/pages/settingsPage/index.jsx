@@ -26,6 +26,7 @@ function SettingsPage() {
             try {
               const response = await axios.get("http://localhost:8081/logincheck");
               setIsLogin(response.data.access === "true"); // Mengubah string menjadi boolean
+            console.log(response)
             } catch (error) {
               console.error("Error fetching data:", error);
             }
