@@ -4,17 +4,9 @@ import Card from '@mui/material/Card';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-  marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
+import { useNavigate } from 'react-router-dom';
+import { useState,useEffect } from 'react';
+import axios from 'axios';
 
 const notification=[
   {
@@ -34,42 +26,62 @@ const notification=[
 ]
 
 export default function NotificationList() {
+  const [transaksi, setTransaksi] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const grabHandler = async () => {
+      try {
+        const response = await axios.get("http://localhost:8081/readtransaksibyid/" + 3);
+        setTransaksi(response.data.result);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    grabHandler();
+  }, []);
+
   return (
     <div>
-      {notification.map((data,index)=>(
+      {transaksi.map((data,index)=>(
         <Card sx={{ maxWidth: '100%', marginBottom: '10px' }}>
           <Typography gutterBottom color='primary' sx={{
               fontWeight:"bold", 
               fontSize: 20,
               margin: "10px 20px 0px 20px"
           }}>
-              {data.productname}
+              {data.namaProduk}
           </Typography>
           <Typography gutterBottom sx={{
               fontWeight:"bold", 
               fontSize: 18,
               margin: "0px 20px 0px 20px"
           }}>
-              Pemesan: {data.sender}, {data.phone}
+              Pemesan: {data.nama}, {data.noTelp}
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{
             margin: "0px 20px 0px 20px"
           }}>
-              {data.sendDate}
+              {data.waktu}
           </Typography>
           <Typography variant="body2" color="text.primary" sx={{
             margin: "10px 20px 0px 20px"
           }}>
-              {data.description}
+              {data.deskripsi}
           </Typography>
           <div style={{margin:'10px 20px 10px 20px'}}>
             <div style={{display: 'flex', justifyContent: 'space-between'}}>
-              <Button variant="contained" color="primary" type='submit' style={{
+              <Button variant="contained" color="primary" 
+                onClick={()=>(
+                  axios.post("http://localhost:8081/updatestatus/" + data.id)
+                )} style={{
                 width: "49%", marginBottom: "10px"
               }}>
                 Terima Pesanan
               </Button>
-              <Button variant="contained" color="error" type='submit' style={{
+              <Button variant="contained" color="error" 
+              onClick={()=>(axios.post("http://localhost:8081/deletestatus/" + data.id))} style={{
                 width: "49%", marginBottom: "10px"
               }}>
                 Tolak Pesanan

@@ -28,7 +28,7 @@ function ProductMap() {
     };
 
     grabHandler();
-  }, []); // Empty dependency array ensures this effect runs once on component mount
+  }, []);
 
   return (
     console.log(produk),

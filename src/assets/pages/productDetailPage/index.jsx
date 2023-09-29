@@ -15,6 +15,8 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState,useEffect } from 'react';
 import axios from 'axios';
+import Snackbar from '@mui/material/Snackbar';
+import CloseIcon from '@mui/icons-material/Close';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -60,11 +62,39 @@ function ProductDetailPage() {
     try {
         e.preventDefault();
         const response = await axios.post('http://localhost:8081/transaksi', {no,desc,nama,"id" : id, "namap" : namap});
+        handleClick();
         console.log(response.data);
     } catch (error) {
         console.log(error);
     }
-}
+    }
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleClick = () => {
+        setOpen(true);
+    };
+    
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+        return;
+        }
+    
+        setOpen(false);
+        navigate('/');
+    };
+    const action = (
+        <React.Fragment>
+            <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={handleClose}
+            >
+                <CloseIcon fontSize="small" />
+            </IconButton>
+        </React.Fragment>
+    );
 
   return (
     <div className={css.topPallete}>
@@ -207,6 +237,13 @@ function ProductDetailPage() {
             </Button>
             <div style={{height: '50px'}}/>
         </form>
+        <Snackbar
+            open={open}
+            autoHideDuration={2000}
+            onClose={handleClose}
+            message="Pesananmu telah dikirim ke penjual. Penjual akan segera menghubungimu"
+            action={action}
+        />
     </div>
   );
 }

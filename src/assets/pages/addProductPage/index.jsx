@@ -8,6 +8,7 @@ import { useState } from "react";
 import { alignProperty } from '@mui/material/styles/cssUtils';
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
+import { useNavigate } from 'react-router-dom';
 // import { use } from '../../../../../server/routes/login';
 
 // const shop = [
@@ -31,6 +32,7 @@ function AddProductPage() {
     const [deskripsi, setDeskripsi] = useState(null);
     const [harga1, setHarga1] = useState(null);
     const [harga2, setHarga2] = useState(null);
+    const navigate = useNavigate();
 
         function handleUploadChang1(e){
             console.log(e.target.files[0]);
