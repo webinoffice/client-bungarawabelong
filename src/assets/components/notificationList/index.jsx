@@ -74,14 +74,14 @@ export default function NotificationList() {
             <div style={{display: 'flex', justifyContent: 'space-between'}}>
               <Button variant="contained" color="primary" 
                 onClick={()=>(
-                  axios.post("http://localhost:8081/updatestatus/" + data.id)
+                  axios.post("http://localhost:8081/updatestatus/" , {"id" : data.id} )
                 )} style={{
                 width: "49%", marginBottom: "10px"
               }}>
                 Terima Pesanan
               </Button>
               <Button variant="contained" color="error" 
-              onClick={()=>(axios.post("http://localhost:8081/deletestatus/" + data.id))} style={{
+              onClick={()=>(axios.post("http://localhost:8081/deletestatus/" ,{"id" : data.id}))} style={{
                 width: "49%", marginBottom: "10px"
               }}>
                 Tolak Pesanan
