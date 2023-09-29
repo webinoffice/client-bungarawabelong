@@ -13,6 +13,8 @@ import { TextField, Button } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useState,useEffect } from 'react';
+import axios from 'axios';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -47,6 +49,22 @@ function ProductDetailPage() {
   const handleStepChange = (step) => {
     setActiveStep(step);
   };
+
+  const [no,setNo] = useState('')
+  const [desc,setDesc] = useState('')
+  const [namap,setNamap] = useState(location.state.para.nama)
+  const [id,setId] = useState(location.state.para.shopid)
+  const [nama,setNama] = useState('')
+
+  const handleSubmit = async (e) => {
+    try {
+        e.preventDefault();
+        const response = await axios.post('http://localhost:8081/transaksi', {no,desc,nama,"id" : id, "namap" : namap});
+        console.log(response.data);
+    } catch (error) {
+        console.log(error);
+    }
+}
 
   return (
     <div className={css.topPallete}>
@@ -158,12 +176,13 @@ function ProductDetailPage() {
             marginTop: '10px',
             marginLeft: '20px',
             marginRight: '20px',
-        }}>
+        }} onSubmit={handleSubmit}>
             <TextField
                 style={{ width: "100%", marginBottom: "10px"}}
                 type="text"
                 label="Nama"
                 variant="outlined"
+                onChange={e => setNama(e.target.value)}
             />
             <br />
             <TextField
@@ -171,15 +190,17 @@ function ProductDetailPage() {
                 type="text"
                 label="No. Telepon"
                 variant="outlined"
+                onChange={e => setNo(e.target.value)}
             />
             <TextField
                 style={{ width: "100%", marginBottom: "20px" }}
                 type="text"
                 label="Deskripsi"
                 variant="outlined"
+                onChange={e => setDesc(e.target.value)}
             />
             <br />
-            <Button variant="contained" color="primary" style={{
+            <Button type='submit' variant="contained" color="primary" style={{
                 width: "100%", marginBottom: "10px"
             }}>
                 Pesan Sekarang
