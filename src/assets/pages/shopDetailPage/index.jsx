@@ -16,6 +16,11 @@ import FavouriteMap from '../../components/favouriteMap';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import { useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import axios from 'axios';
+import { useEffect } from 'react';
+import ShopMap from '../../components/shopMap';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -46,10 +51,38 @@ const shop = [
 function ShopDetailPage() {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
-
+  const location = useLocation();
+  const [toko, setToko] =  useState([]);
+  const [produk, setProduk] =  useState([]);
+  const [shopId, setShopId] = useState(location.state);
+    console.log(location.state)
   const handleStepChange = (step) => {
     setActiveStep(step);
+};
+const grabProduk = async () => {
+  try {
+    const response = await axios.get("http://localhost:8081/readprodukbyid/" + location.state);
+    setProduk(response.data.result);
+    console.log(response.data.result); 
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
+
+  const grabToko = async () => {
+    try {
+      const response = await axios.get("http://localhost:8081/readtokobyid/" + location.state);
+      setToko(response.data.result[0]);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
+
+
+  useEffect(() => {
+    grabProduk();
+    grabToko();
+  }, []);
 
   return (
     <div className={css.topPallete}>
@@ -71,7 +104,7 @@ function ShopDetailPage() {
                     marginTop: 'auto',
                     marginLeft: '20px'
                 }}>
-                    {shop[0].shopName}
+                    {toko.name}
                 </Typography>
             </div>
         </div>
@@ -80,7 +113,7 @@ function ShopDetailPage() {
             marginLeft: '20px',
             marginRight: '20px',
         }}>
-            {shop[0].shopDescription}
+            {toko.description}
         </Typography>
         <Divider/>
         <div style={{
@@ -95,7 +128,7 @@ function ShopDetailPage() {
                 alignSelf: 'center',
                 fontWeight: 'bold'
             }}>
-                {shop[0].shopAddress}
+                {toko.shopAddress}
             </Typography>
         </div>
         <div style={{
@@ -110,7 +143,7 @@ function ShopDetailPage() {
                 alignSelf: 'center',
                 fontWeight: 'bold'
             }}>
-                {shop[0].shopPhone}
+                {toko.shopPhone}
             </Typography>
         </div>
         <div style={{
@@ -125,7 +158,7 @@ function ShopDetailPage() {
                 alignSelf: 'center',
                 fontWeight: 'bold'
             }}>
-                {shop[0].bankName} - {shop[0].bankNum}
+                {toko.bankName} - {toko.bankNum}
             </Typography>
         </div>
         <Divider/>
@@ -137,7 +170,7 @@ function ShopDetailPage() {
             }}>
                 Produk Toko
             </Typography>
-        <FavouriteMap/>
+        <ShopMap props={produk}/>
     </div>
   );
 }

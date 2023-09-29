@@ -12,6 +12,7 @@ import Divider from '@mui/material/Divider';
 import { TextField, Button } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -35,8 +36,13 @@ const shop = [
 ]
 
 function ProductDetailPage() {
+    const navigate = useNavigate();
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
+  const location = useLocation();
+  console.log(location);
+//   const {para} = state;
+//   console.log(para);
 
   const handleStepChange = (step) => {
     setActiveStep(step);
@@ -64,8 +70,8 @@ function ProductDetailPage() {
                         width: '100%',
                         objectFit: 'cover',
                     }}
-                    src={images[0].imgPath}
-                    alt={images[0].label}
+                    src={location.state.para.img}
+                    alt={location.state.para.img}
                     />
                 ) : null}
                 </div>
@@ -85,7 +91,7 @@ function ProductDetailPage() {
                 marginBottom: 'auto',
                 marginTop: 'auto',
             }}>
-                {images[0].label}
+                {location.state.para.nama}
             </Typography>
             <IconButton>
                 <StarBorderIcon color='primary'/>
@@ -97,7 +103,7 @@ function ProductDetailPage() {
             marginLeft: '20px',
             marginRight: '20px',
         }}>
-            Harga Berkisar di Rp. {images[0].price} - {images[0].price2}
+            Harga Berkisar di Rp. {location.state.para.harga} - {location.state.para.harga2}
         </Typography>
         <Divider/>
         <Typography variant="body2" color="text.secondary" sx={{
@@ -106,7 +112,7 @@ function ProductDetailPage() {
             marginLeft: '20px',
             marginRight: '20px',
         }}>
-            {images[0].description}
+            {location.state.para.deskripsi}
         </Typography>
         <Divider/>
 
@@ -127,10 +133,10 @@ function ProductDetailPage() {
                     marginTop: 'auto',
                     marginLeft: '20px'
                 }}>
-                    {shop[0].shopName}
+                    {location.state.para.namatoko}
                 </Typography>
             </div>
-            <IconButton>
+            <IconButton onClick={()=>(navigate('/shop', {state: (location.state.para.shopid )}))}>
                 <ArrowForwardIcon color='primary'></ArrowForwardIcon>
             </IconButton>
         </div>

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import css from './productPage.module.css';
-import FavouriteMap from '../../components/favouriteMap';
 import { Typography } from '@mui/material';
 import SearchAppBar from '../../components/searchAppBar';
+import ProductMap from '../../components/productMap';
 
 function ProductPage() {
     return (
@@ -16,7 +16,7 @@ function ProductPage() {
             }}>
                 Daftar Produk
             </Typography>
-            <FavouriteMap/>
+            <ProductMap/>
         </div>
     );
 }
