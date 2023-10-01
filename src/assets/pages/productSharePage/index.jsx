@@ -3,7 +3,7 @@ import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import SwipeableViews from 'react-swipeable-views-react-18-fix';
 import { autoPlay } from 'react-swipeable-views-utils';
-import css from './productDetailPage.module.css';
+import css from './productSharePage.module.css';
 import PageAppBar from '../../components/pageAppBar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
@@ -12,12 +12,11 @@ import Divider from '@mui/material/Divider';
 import { TextField, Button } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useState,useEffect, useRef } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
-import ShareIcon from '@mui/icons-material/Share';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -40,39 +39,35 @@ const shop = [
     }
 ]
 
-function ProductDetailPage() {
+function ProductSharePage() {
+    const {product_id} = useParams();
+    const [product, setProduct] = React.useState([]);
     const navigate = useNavigate();
-  const theme = useTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
-  const location = useLocation();
-  console.log(location);
-  const [message, setMessage] = React.useState('');
+    const theme = useTheme();
+    const [activeStep, setActiveStep] = React.useState(0);
 
-  const handleStepChange = (step) => {
-    setActiveStep(step);
-  };
+    const handleStepChange = (step) => {
+        setActiveStep(step);
+    };
 
-  const [no,setNo] = useState('')
-  const [desc,setDesc] = useState('')
-  const [namap,setNamap] = useState(location.state.para.nama)
-  const [id,setId] = useState(location.state.para.shopid)
-  const [nama,setNama] = useState('')
+    const [no,setNo] = useState('')
+    const [desc,setDesc] = useState('')
+    const [nama,setNama] = useState('')
 
-  const handleSubmit = async (e) => {
-    try {
-        e.preventDefault();
-        const response = await axios.post('http://localhost:8081/createtransaction', {
-            product_id: location.state.para.product_id,
-            transaction_description: desc,
-            transaction_name: nama,
-            transaction_phonenum: no
-        });
-        setMessage('Pesananmu telah dikirim ke penjual. Penjual akan segera menghubungimu');
-        handleClick();
-        console.log(response.data);
-    } catch (error) {
-        console.log(error);
-    }
+    const handleSubmit = async (e) => {
+        try {
+            e.preventDefault();
+            const response = await axios.post('http://localhost:8081/createtransaction', {
+                product_id: product[0].product_id,
+                transaction_description: desc,
+                transaction_name: nama,
+                transaction_phonenum: no
+            });
+            handleClick();
+            console.log(response.data);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const [open, setOpen] = React.useState(false);
@@ -89,8 +84,6 @@ function ProductDetailPage() {
         setOpen(false);
         navigate('/');
     };
-
-
     const action = (
         <React.Fragment>
             <IconButton
@@ -104,8 +97,24 @@ function ProductDetailPage() {
         </React.Fragment>
     );
 
-  return (
-    <div className={css.topPallete}>
+    useEffect(()=>{
+        const getProduct = async () => {
+            try {
+              const response = await axios.get("http://localhost:8081/productbyproductid/" + product_id);
+              setProduct(response.data);
+              console.log(response.data);
+            } catch (error) {
+              console.error("Error fetching data:", error);
+            }
+          };
+      
+        getProduct();
+    },[product_id])
+
+    console.log(product[0]);
+  return (product.length>0?
+    
+    (<div className={css.topPallete}>
       <PageAppBar />
       <Box sx={{ maxWidth: 1, flexGrow: 1 }}>
         <AutoPlaySwipeableViews
@@ -126,8 +135,8 @@ function ProductDetailPage() {
                   width: "100%",
                   objectFit: "cover",
                 }}
-                src={location.state.para.product_image}
-                alt={location.state.para.img}
+                src={product[0].product_image}
+                // alt={product.product_image}
               />
             ) : null}
           </div>
@@ -153,22 +162,11 @@ function ProductDetailPage() {
             marginTop: "auto",
           }}
         >
-          {location.state.para.product_name}
+          {product[0].product_name}
         </Typography>
-        <div>
-          <IconButton onClick={()=>{
-            navigator.clipboard.writeText(
-              "http://localhost:3000/#/share-detail/" + location.state.para.product_id)
-            setMessage('Tautan produk telah di salin ke clipboard')
-            handleClick();
-          }
-          }> 
-            <ShareIcon color='primary'/>
-          </IconButton>
-          <IconButton>
-            <StarBorderIcon color="primary" />
-          </IconButton>
-        </div>
+        <IconButton>
+          <StarBorderIcon color="primary" />
+        </IconButton>
       </div>
       <Typography
         gutterBottom
@@ -180,8 +178,8 @@ function ProductDetailPage() {
           marginRight: "20px",
         }}
       >
-        Harga Berkisar di Rp. {location.state.para.product_price_1} -{" "}
-        {location.state.para.product_price_2}
+        Harga Berkisar di Rp. {product[0].product_price_1} -{" "}
+        {product[0].product_price_2}
       </Typography>
       <Divider />
       <Typography
@@ -194,7 +192,7 @@ function ProductDetailPage() {
           marginRight: "20px",
         }}
       >
-        {location.state.para.product_description}
+        {product[0].product_description}
       </Typography>
       <Divider />
 
@@ -225,12 +223,12 @@ function ProductDetailPage() {
               marginLeft: "20px",
             }}
           >
-            {location.state.para.shop.shop_name}
+            {product[0].shop.shop_name}
           </Typography>
         </div>
         <IconButton
           onClick={() =>
-            navigate("/shop", { state: location.state.para })
+            navigate("/shop", { state: null })
           }
         >
           <ArrowForwardIcon color="primary"></ArrowForwardIcon>
@@ -301,11 +299,11 @@ function ProductDetailPage() {
         open={open}
         autoHideDuration={2000}
         onClose={handleClose}
-        message={message}
+        message="Pesananmu telah dikirim ke penjual. Penjual akan segera menghubungimu"
         action={action}
       />
-    </div>
+    </div>):""
   );
 }
 
-export default ProductDetailPage;
+export default ProductSharePage;

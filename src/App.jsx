@@ -12,6 +12,7 @@ import LoginPage from './assets/pages/loginPage';
 import ProfilePage from './assets/pages/profilePage';
 import AddProductPage from './assets/pages/addProductPage';
 import NotificationPage from './assets/pages/notificationPage';
+import ProductSharePage from './assets/pages/productSharePage';
 import {
   TransitionGroup,
   CSSTransition
@@ -48,10 +49,12 @@ function App() {
           <Route path="/settings" element={<SettingsPage/>}/>
           <Route path='/product' element={<ProductPage/>}/>
           <Route path='/detail' element={<ProductDetailPage/>}/>
+          <Route path='/share-detail/:product_id' element={<ProductSharePage/>}/>
           <Route path='/shop' element={<ShopDetailPage/>}/>
           <Route path="/profile" element={<ProfilePage/>}/>
           <Route path="/add-product" element={<AddProductPage/>}/>
           <Route path="/notification" element={<NotificationPage/>}/>
+
         </Routes>
       </HashRouter>
     </ThemeProvider>
