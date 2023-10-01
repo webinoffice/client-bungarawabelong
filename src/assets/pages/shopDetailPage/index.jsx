@@ -59,30 +59,30 @@ function ShopDetailPage() {
   const handleStepChange = (step) => {
     setActiveStep(step);
 };
-const grabProduk = async () => {
-  try {
-    const response = await axios.get("http://localhost:8081/readprodukbyid/" + location.state);
-    setProduk(response.data.result);
-    console.log(response.data.result); 
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-};
+// const grabProduk = async () => {
+//   try {
+//     const response = await axios.get("http://localhost:8081/readprodukbyid/" + location.state);
+//     setProduk(response.data.result);
+//     console.log(response.data.result); 
+//   } catch (error) {
+//     console.error("Error fetching data:", error);
+//   }
+// };
 
-  const grabToko = async () => {
-    try {
-      const response = await axios.get("http://localhost:8081/readtokobyid/" + location.state);
-      setToko(response.data.result[0]);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+//   const grabToko = async () => {
+//     try {
+//       const response = await axios.get("http://localhost:8081/readtokobyid/" + location.state);
+//       setToko(response.data.result[0]);
+//     } catch (error) {
+//       console.error("Error fetching data:", error);
+//     }
+//   };
 
 
-  useEffect(() => {
-    grabProduk();
-    grabToko();
-  }, []);
+//   useEffect(() => {
+//     grabProduk();
+//     grabToko();
+//   }, []);
 
   return (
     <div className={css.topPallete}>
@@ -104,7 +104,7 @@ const grabProduk = async () => {
                     marginTop: 'auto',
                     marginLeft: '20px'
                 }}>
-                    {toko.name}
+                    {location.state.shop.shop_name}
                 </Typography>
             </div>
         </div>
@@ -113,7 +113,7 @@ const grabProduk = async () => {
             marginLeft: '20px',
             marginRight: '20px',
         }}>
-            {toko.description}
+            {location.state.shop.shop_description}
         </Typography>
         <Divider/>
         <div style={{
@@ -128,7 +128,7 @@ const grabProduk = async () => {
                 alignSelf: 'center',
                 fontWeight: 'bold'
             }}>
-                {toko.shopAddress}
+                {location.state.shop.shop_address}
             </Typography>
         </div>
         <div style={{
@@ -143,7 +143,7 @@ const grabProduk = async () => {
                 alignSelf: 'center',
                 fontWeight: 'bold'
             }}>
-                {toko.shopPhone}
+                {location.state.shop.shop_phone}
             </Typography>
         </div>
         <div style={{
@@ -158,7 +158,7 @@ const grabProduk = async () => {
                 alignSelf: 'center',
                 fontWeight: 'bold'
             }}>
-                {toko.bankName} - {toko.bankNum}
+                {location.state.shop.shop_bankname} - {location.state.shop.shop_banknum}
             </Typography>
         </div>
         <Divider/>
@@ -170,7 +170,7 @@ const grabProduk = async () => {
             }}>
                 Produk Toko
             </Typography>
-        <ShopMap props={produk}/>
+        <ShopMap props={location.state}/>
     </div>
   );
 }

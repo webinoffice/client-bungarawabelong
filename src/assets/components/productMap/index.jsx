@@ -20,8 +20,9 @@ function ProductMap() {
   useEffect(() => {
     const grabHandler = async () => {
       try {
-        const response = await axios.get("http://localhost:8081/grab");
+        const response = await axios.get("http://localhost:8081/productall");
         setProduk(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -44,7 +45,7 @@ function ProductMap() {
                 <CardMedia
                   component="img"
                   height="150"
-                  image={data.img || 'default_image_url'} // Provide a default image URL
+                  image={data.product_image || 'default_image_url'} // Provide a default image URL
                   alt="flower"
                 />
                 <CardContent>
@@ -52,10 +53,10 @@ function ProductMap() {
                     fontWeight: "bold",
                     fontSize: 20,
                   }}>
-                    {data.nama}
+                    {data.product_name}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    {data.namatoko}
+                    {data.shop.shop_name}
                   </Typography>
                 </CardContent>
               </CardActionArea>

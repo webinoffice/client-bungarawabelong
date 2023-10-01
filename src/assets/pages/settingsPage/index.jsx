@@ -14,68 +14,67 @@ import Divider from '@mui/material/Divider';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import jwt_decode from "jwt-decode";
 
 const step = 2;
 function SettingsPage() {
     const [produk, setProduk] = useState([]);
-    const [isLogin, setIsLogin] = useState(false);
+    const [isLogin, setIsLogin] = useState("");
     const navigate = useNavigate();
 
+    const grabHandler = async () => {
+      try {
+        const response = await axios.get("http://localhost:8081/islogin");
+        const decoded = jwt_decode(response.data.accessToken);
+        setIsLogin(decoded.shop_id);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
     useEffect(() => {
-        const grabHandler = async () => {
-            try {
-              const response = await axios.get("http://localhost:8081/logincheck");
-              setIsLogin(response.data.access === "true"); // Mengubah string menjadi boolean
-            } catch (error) {
-              console.error("Error fetching data:", error);
-            }
-          };
-    
         grabHandler();
     }, []);
-    if (isLogin) {
-        return (
-            <div className={css.topPallete}>
-                <SearchAppBar/>
-                <Typography gutterBottom sx={{
-                    fontWeight:"bold", 
-                    fontSize: 22,
-                    maxWidth: '500px',
-                    margin: 2
-                }}>
-                    Pengaturan  
-                </Typography>
-                <SettingsMenu/>
-                <NavigationBar para={step}/>
-            </div>
-        );
-    }else{
-        return (
-            <div className={css.topPallete}>
-                <SearchAppBar/>
-                <Typography gutterBottom sx={{
-                    fontWeight:"bold", 
-                    fontSize: 22,
-                    maxWidth: '500px',
-                    margin: 2
-                }}>
-                    Pengaturan
-                </Typography>
-                <Box sx={{ maxWidth: 500, bgcolor: 'background.paper' }}>
-                    <nav aria-label="secondary mailbox folders">
-                        <List>
-                            <ListItem disablePadding>
-                            <ListItemButton onClick={()=>(navigate('/login'))}>
-                                <ListItemText primary="Masuk Akun" />
-                            </ListItemButton>
-                            </ListItem>
-                        </List>
-                    </nav>
-                </Box>
-                <NavigationBar para={step}/>
-            </div>
-        );
-    }
+
+    return (
+        isLogin !== "" ? 
+        (<div className={css.topPallete}>
+            <SearchAppBar/>
+            <Typography gutterBottom sx={{
+                fontWeight:"bold", 
+                fontSize: 22,
+                maxWidth: '500px',
+                margin: 2
+            }}>
+                Pengaturan  
+            </Typography>
+            <SettingsMenu/>
+            <NavigationBar para={step}/>
+        </div>) : 
+        (<div className={css.topPallete}>
+            <SearchAppBar/>
+            <Typography gutterBottom sx={{
+                fontWeight:"bold", 
+                fontSize: 22,
+                maxWidth: '500px',
+                margin: 2
+            }}>
+                Pengaturan
+            </Typography>
+            <Box sx={{ maxWidth: 500, bgcolor: 'background.paper' }}>
+                <nav aria-label="secondary mailbox folders">
+                    <List>
+                        <ListItem disablePadding>
+                        <ListItemButton onClick={()=>(navigate('/login'))}>
+                            <ListItemText primary="Masuk Akun" />
+                        </ListItemButton>
+                        </ListItem>
+                    </List>
+                </nav>
+            </Box>
+            <NavigationBar para={step}/>
+        </div>)
+    );
 }
 
 export default SettingsPage;

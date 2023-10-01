@@ -11,9 +11,16 @@ import InventoryIcon from '@mui/icons-material/Inventory';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 export default function SettingsMenu() {
   const navigate = useNavigate();
+
+  const logout = async () => {
+    navigate("/");
+    await axios.delete("http://localhost:8081/logout");
+  };
+
   return (
     <Box sx={{ maxWidth: 500, bgcolor: 'background.paper' }}>
       <nav aria-label="main mailbox folders">
@@ -74,7 +81,7 @@ export default function SettingsMenu() {
       <nav aria-label="secondary mailbox folders">
         <List>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={() => logout()}>
               <ListItemText primary="Keluar Akun" />
             </ListItemButton>
           </ListItem>

@@ -19,45 +19,65 @@
       console.log({props})
       console.log(produk)
 
-    //   useEffect(() => {
-    //     const grabHandler = async () => {
-    //       try {
-    //         const response = await axios.get("http://localhost:8081/grab");
-    //         setProduk(response.data);
-    //       } catch (error) {
-    //         console.error("Error fetching data:", error);
-    //       }
-    //     };
+      useEffect(() => {
+        const grabHandler = async () => {
+          try {
+            const response = await axios.get(
+              "http://localhost:8081/productbyshopid/" + props.shop_id
+            );
+            setProduk(response.data);
+            console.log(response.data);
+          } catch (error) {
+            console.error("Error fetching data:", error);
+          }
+        };
 
-    //     grabHandler();
-    //   }, []); // Empty dependency array ensures this effect runs once on component mount
+        grabHandler();
+      }, []); // Empty dependency array ensures this effect runs once on component mount
 
       return (
         // console.log(produk),
-        <Box sx={{ maxWidth: '500px', margin: 2 }}>
-          <Grid container rowSpacing={2} columnSpacing={2} sx={{ maxWidth: '500px' }}>
-            {props.map((data, index) => (
+        <Box sx={{ maxWidth: "500px", margin: 2 }}>
+          <Grid
+            container
+            rowSpacing={2}
+            columnSpacing={2}
+            sx={{ maxWidth: "500px" }}
+          >
+            {produk.map((data, index) => (
               <Grid item xs={6} key={index}>
-                <Card sx={{
-                  maxWidth: '500px',
-                  borderRadius: 1,
-                }}>
-                  <CardActionArea onClick={()=>(navigate('/detail', {state: {para: (data)}}))}>
+                <Card
+                  sx={{
+                    maxWidth: "500px",
+                    borderRadius: 1,
+                  }}
+                >
+                  <CardActionArea
+                    onClick={() =>
+                      navigate("/detail", { state: { para: data } })
+                    }
+                  >
                     <CardMedia
                       component="img"
                       height="150"
-                      image={data.img || 'default_image_url'} // Provide a default image URL
+                      image={
+                          data.product_image
+                          || "default_image_url"
+                      } // Provide a default image URL
                       alt="flower"
                     />
                     <CardContent>
-                      <Typography gutterBottom sx={{
-                        fontWeight: "bold",
-                        fontSize: 20,
-                      }}>
-                        {data.nama}
+                      <Typography
+                        gutterBottom
+                        sx={{
+                          fontWeight: "bold",
+                          fontSize: 20,
+                        }}
+                      >
+                        {data.product_name}
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
-                        {data.namatoko}
+                        {data.shop.shop_name}
                       </Typography>
                     </CardContent>
                   </CardActionArea>

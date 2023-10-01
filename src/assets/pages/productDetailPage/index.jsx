@@ -61,7 +61,12 @@ function ProductDetailPage() {
   const handleSubmit = async (e) => {
     try {
         e.preventDefault();
-        const response = await axios.post('http://localhost:8081/transaksi', {no,desc,nama,"id" : id, "namap" : namap});
+        const response = await axios.post('http://localhost:8081/createtransaction', {
+            product_id: location.state.para.product_id,
+            transaction_description: desc,
+            transaction_name: nama,
+            transaction_phonenum: no
+        });
         handleClick();
         console.log(response.data);
     } catch (error) {
@@ -98,152 +103,193 @@ function ProductDetailPage() {
 
   return (
     <div className={css.topPallete}>
-        <PageAppBar/>
-        <Box sx={{ maxWidth: 1, flexGrow: 1 }}>
-            <AutoPlaySwipeableViews
-                axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                index={activeStep}
-                onChangeIndex={handleStepChange}
-                enableMouseEvents
-            >
-                <div key={images.label}>
-                {Math.abs(activeStep - index) <= 2 ? (
-                    <Box
-                    component="img"
-                    sx={{
-                        aspectRatio: 1/1,
-                        display: 'block',
-                        maxWidth: 1,
-                        overflow: 'hidden',
-                        width: '100%',
-                        objectFit: 'cover',
-                    }}
-                    src={location.state.para.img}
-                    alt={location.state.para.img}
-                    />
-                ) : null}
-                </div>
-            </AutoPlaySwipeableViews>
-        </Box>
-        <div style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            margin: '20px',
-            marginTop: '10px',
-            marginBottom: '10px',
-            textAlign: 'center',
-        }}>
-            <Typography gutterBottom color='primary' sx={{
-                fontWeight:"bold", 
-                fontSize: 22,
-                marginBottom: 'auto',
-                marginTop: 'auto',
-            }}>
-                {location.state.para.nama}
-            </Typography>
-            <IconButton>
-                <StarBorderIcon color='primary'/>
-            </IconButton>
+      <PageAppBar />
+      <Box sx={{ maxWidth: 1, flexGrow: 1 }}>
+        <AutoPlaySwipeableViews
+          axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+          index={activeStep}
+          onChangeIndex={handleStepChange}
+          enableMouseEvents
+        >
+          <div key={images.label}>
+            {Math.abs(activeStep - index) <= 2 ? (
+              <Box
+                component="img"
+                sx={{
+                  aspectRatio: 1 / 1,
+                  display: "block",
+                  maxWidth: 1,
+                  overflow: "hidden",
+                  width: "100%",
+                  objectFit: "cover",
+                }}
+                src={location.state.para.product_image}
+                alt={location.state.para.img}
+              />
+            ) : null}
+          </div>
+        </AutoPlaySwipeableViews>
+      </Box>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          margin: "20px",
+          marginTop: "10px",
+          marginBottom: "10px",
+          textAlign: "center",
+        }}
+      >
+        <Typography
+          gutterBottom
+          color="primary"
+          sx={{
+            fontWeight: "bold",
+            fontSize: 22,
+            marginBottom: "auto",
+            marginTop: "auto",
+          }}
+        >
+          {location.state.para.product_name}
+        </Typography>
+        <IconButton>
+          <StarBorderIcon color="primary" />
+        </IconButton>
+      </div>
+      <Typography
+        gutterBottom
+        color="error"
+        sx={{
+          fontWeight: "bold",
+          fontSize: 18,
+          marginLeft: "20px",
+          marginRight: "20px",
+        }}
+      >
+        Harga Berkisar di Rp. {location.state.para.product_price_1} -{" "}
+        {location.state.para.product_price_2}
+      </Typography>
+      <Divider />
+      <Typography
+        variant="body2"
+        color="text.secondary"
+        sx={{
+          marginTop: "10px",
+          marginBottom: "10px",
+          marginLeft: "20px",
+          marginRight: "20px",
+        }}
+      >
+        {location.state.para.product_description}
+      </Typography>
+      <Divider />
+
+      <div
+        style={{
+          display: "flex",
+          margin: "20px",
+          justifyContent: "space-between",
+        }}
+      >
+        <div style={{ display: "flex" }}>
+          <Avatar
+            alt="Remy Sharp"
+            src={shop[0].imgPath}
+            sx={{
+              height: "50px",
+              width: "50px",
+            }}
+          />
+          <Typography
+            gutterBottom
+            color="primary"
+            sx={{
+              fontWeight: "bold",
+              fontSize: 18,
+              marginBottom: "auto",
+              marginTop: "auto",
+              marginLeft: "20px",
+            }}
+          >
+            {location.state.para.shop.shop_name}
+          </Typography>
         </div>
-        <Typography gutterBottom color='error' sx={{
-            fontWeight:"bold", 
-            fontSize: 18,
-            marginLeft: '20px',
-            marginRight: '20px',
-        }}>
-            Harga Berkisar di Rp. {location.state.para.harga} - {location.state.para.harga2}
-        </Typography>
-        <Divider/>
-        <Typography variant="body2" color="text.secondary" sx={{
-            marginTop: '10px',
-            marginBottom: '10px',
-            marginLeft: '20px',
-            marginRight: '20px',
-        }}>
-            {location.state.para.deskripsi}
-        </Typography>
-        <Divider/>
+        <IconButton
+          onClick={() =>
+            navigate("/shop", { state: location.state.para })
+          }
+        >
+          <ArrowForwardIcon color="primary"></ArrowForwardIcon>
+        </IconButton>
+      </div>
 
-        <div style={{
-            display: 'flex',
-            margin: '20px',
-            justifyContent: 'space-between'
-        }}>
-            <div style={{display: 'flex'}}>
-                <Avatar alt="Remy Sharp" src={shop[0].imgPath} sx={{
-                    height: '50px',
-                    width: '50px'
-                }} />
-                <Typography gutterBottom color='primary' sx={{
-                    fontWeight:"bold", 
-                    fontSize: 18,
-                    marginBottom: 'auto',
-                    marginTop: 'auto',
-                    marginLeft: '20px'
-                }}>
-                    {location.state.para.namatoko}
-                </Typography>
-            </div>
-            <IconButton onClick={()=>(navigate('/shop', {state: (location.state.para.shopid )}))}>
-                <ArrowForwardIcon color='primary'></ArrowForwardIcon>
-            </IconButton>
-        </div>
-
-
-        <Divider/>
-        <Typography gutterBottom color='primary' sx={{
-            fontWeight:"bold", 
-            fontSize: 18,
-            marginBottom: 'auto',
-            marginTop: '10px',
-            marginLeft: '20px',
-            marginRight: '20px',
-        }}>
-            Form Pemesanan
-        </Typography>
-        <form style={{
-            marginBottom: 'auto',
-            marginTop: '10px',
-            marginLeft: '20px',
-            marginRight: '20px',
-        }} onSubmit={handleSubmit}>
-            <TextField
-                style={{ width: "100%", marginBottom: "10px"}}
-                type="text"
-                label="Nama"
-                variant="outlined"
-                onChange={e => setNama(e.target.value)}
-            />
-            <br />
-            <TextField
-                style={{ width: "100%", marginBottom: "10px" }}
-                type="text"
-                label="No. Telepon"
-                variant="outlined"
-                onChange={e => setNo(e.target.value)}
-            />
-            <TextField
-                style={{ width: "100%", marginBottom: "20px" }}
-                type="text"
-                label="Deskripsi"
-                variant="outlined"
-                onChange={e => setDesc(e.target.value)}
-            />
-            <br />
-            <Button type='submit' variant="contained" color="primary" style={{
-                width: "100%", marginBottom: "10px"
-            }}>
-                Pesan Sekarang
-            </Button>
-            <div style={{height: '50px'}}/>
-        </form>
-        <Snackbar
-            open={open}
-            autoHideDuration={2000}
-            onClose={handleClose}
-            message="Pesananmu telah dikirim ke penjual. Penjual akan segera menghubungimu"
-            action={action}
+      <Divider />
+      <Typography
+        gutterBottom
+        color="primary"
+        sx={{
+          fontWeight: "bold",
+          fontSize: 18,
+          marginBottom: "auto",
+          marginTop: "10px",
+          marginLeft: "20px",
+          marginRight: "20px",
+        }}
+      >
+        Form Pemesanan
+      </Typography>
+      <form
+        style={{
+          marginBottom: "auto",
+          marginTop: "10px",
+          marginLeft: "20px",
+          marginRight: "20px",
+        }}
+        onSubmit={handleSubmit}
+      >
+        <TextField
+          style={{ width: "100%", marginBottom: "10px" }}
+          type="text"
+          label="Nama"
+          variant="outlined"
+          onChange={(e) => setNama(e.target.value)}
         />
+        <br />
+        <TextField
+          style={{ width: "100%", marginBottom: "10px" }}
+          type="text"
+          label="No. Telepon"
+          variant="outlined"
+          onChange={(e) => setNo(e.target.value)}
+        />
+        <TextField
+          style={{ width: "100%", marginBottom: "20px" }}
+          type="text"
+          label="Deskripsi"
+          variant="outlined"
+          onChange={(e) => setDesc(e.target.value)}
+        />
+        <br />
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          style={{
+            width: "100%",
+            marginBottom: "10px",
+          }}
+        >
+          Pesan Sekarang
+        </Button>
+        <div style={{ height: "50px" }} />
+      </form>
+      <Snackbar
+        open={open}
+        autoHideDuration={2000}
+        onClose={handleClose}
+        message="Pesananmu telah dikirim ke penjual. Penjual akan segera menghubungimu"
+        action={action}
+      />
     </div>
   );
 }

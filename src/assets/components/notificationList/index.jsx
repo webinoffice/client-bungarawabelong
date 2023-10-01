@@ -32,8 +32,9 @@ export default function NotificationList() {
   useEffect(() => {
     const grabHandler = async () => {
       try {
-        const response = await axios.get("http://localhost:8081/readtransaksibyid/" + 3);
-        setTransaksi(response.data.result);
+        const response = await axios.get("http://localhost:8081/gettransactionbyshopid/" + 1);
+        setTransaksi(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -42,52 +43,92 @@ export default function NotificationList() {
     grabHandler();
   }, []);
 
+  const handleUpdate  = async()=>{}
+
   return (
     <div>
-      {transaksi.map((data,index)=>(
-        <Card sx={{ maxWidth: '100%', marginBottom: '10px' }}>
-          <Typography gutterBottom color='primary' sx={{
-              fontWeight:"bold", 
+      {transaksi.map((data, index) => (
+        <Card sx={{ maxWidth: "100%", marginBottom: "10px" }}>
+          <Typography
+            gutterBottom
+            color="primary"
+            sx={{
+              fontWeight: "bold",
               fontSize: 20,
-              margin: "10px 20px 0px 20px"
-          }}>
-              {data.namaProduk}
+              margin: "10px 20px 0px 20px",
+            }}
+          >
+            {data.product.product_name}
           </Typography>
-          <Typography gutterBottom sx={{
-              fontWeight:"bold", 
+          <Typography
+            gutterBottom
+            sx={{
+              fontWeight: "bold",
               fontSize: 18,
-              margin: "0px 20px 0px 20px"
-          }}>
-              Pemesan: {data.nama}, {data.noTelp}
+              margin: "0px 20px 0px 20px",
+            }}
+          >
+            Pemesan: {data.transaction_name}, {data.transaction_phonenum}
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{
-            margin: "0px 20px 0px 20px"
-          }}>
-              {data.waktu}
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{
+              margin: "0px 20px 0px 20px",
+            }}
+          >
+            {data.transaction_time}
           </Typography>
-          <Typography variant="body2" color="text.primary" sx={{
-            margin: "10px 20px 0px 20px"
-          }}>
-              {data.deskripsi}
+          <Typography
+            variant="body2"
+            color="text.primary"
+            sx={{
+              margin: "10px 20px 0px 20px",
+            }}
+          >
+            {data.transaction_description}
           </Typography>
-          <div style={{margin:'10px 20px 10px 20px'}}>
-            <div style={{display: 'flex', justifyContent: 'space-between'}}>
-              <Button variant="contained" color="primary" 
-                onClick={()=>(
-                  axios.post("http://localhost:8081/updatestatus/" , {"id" : data.id} )
-                )} style={{
-                width: "49%", marginBottom: "10px"
-              }}>
-                Terima Pesanan
-              </Button>
-              <Button variant="contained" color="error" 
-              onClick={()=>(axios.post("http://localhost:8081/deletestatus/" ,{"id" : data.id}))} style={{
-                width: "49%", marginBottom: "10px"
-              }}>
-                Tolak Pesanan
-              </Button>
+          {data.transaction_status === "Pending" ? (
+            <div style={{ margin: "10px 20px 10px 20px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() =>
+                    {axios.post("http://localhost:8081/updatetransaction/", {
+                      transaction_id: data.transaction_id,
+                    })
+                    window.location.reload()
+                    }
+                  }
+                  style={{
+                    width: "49%",
+                    marginBottom: "10px",
+                  }}
+                >
+                  Terima Pesanan
+                </Button>
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={() =>
+                    {axios.delete("http://localhost:8081/canceltransaction/"+ data.transaction_id) 
+                    window.location.reload()}
+                  }
+                  style={{
+                    width: "49%",
+                    marginBottom: "10px",
+                  }}
+                >
+                  Tolak Pesanan
+                </Button>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div style={{ margin: "10px 20px 10px 20px" }}>
+              
+            </div>
+          )}
         </Card>
       ))}
     </div>

@@ -56,25 +56,13 @@ function AddProductPage() {
                     headers: { 'content-type': 'multipart/form-data' }
                 }
 
-                axios.post("http://localhost:8081/tes", formData, config)
+                axios.post("http://localhost:8081/createproduct", formData, config)
                 .then(response => {
                     console.log(response);
                 })
                 .catch(error => {
                     console.log(error);
                 });
-
-                // fetch("http://localhost:8081/uploads" , {
-                //     method: "POST",
-                //     body: formData,
-                // }).then((res) => res.json()).then(data => {
-                //     if(data.status === 'sukses'){
-                //         // window.location.href = data.image;
-                //         console.log("SUKSES");
-                //     }else{
-                //         console.log(data.status);
-                //     }
-                // })
             }
         }
 
