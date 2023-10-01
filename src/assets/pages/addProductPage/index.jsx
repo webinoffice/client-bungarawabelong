@@ -26,45 +26,47 @@ import { useNavigate } from 'react-router-dom';
 
 function AddProductPage() {
 
-    const [image,setImage] = useState("http://fakeimg.pl/500x500/");
+    const [image, setImage] = useState("http://fakeimg.pl/500x500/");
     const [saveImage, setSaveImage] = useState(null);
-    const [nama, setNama] = useState(null);
-    const [deskripsi, setDeskripsi] = useState(null);
-    const [harga1, setHarga1] = useState(null);
-    const [harga2, setHarga2] = useState(null);
+    const [nama, setNama] = useState("");
+    const [deskripsi, setDeskripsi] = useState("");
+    const [harga1, setHarga1] = useState("");
+    const [harga2, setHarga2] = useState("");
     const navigate = useNavigate();
 
-        function handleUploadChang1(e){
-            console.log(e.target.files[0]);
-            let uploaded = e.target.files[0];
-            setImage(URL.createObjectURL(uploaded));
-            setSaveImage(uploaded);
+    function handleUploadChange(e){
+        const uploaded = e.target.files[0];
+        setImage(URL.createObjectURL(uploaded));
+        setSaveImage(uploaded);
+    }
+
+    function uploadImage() {
+        if(!saveImage){
+            console.log("Upload gambar gagal");
+        } else{
+            const formData = new FormData();
+            formData.append("product_name", nama);
+            formData.append("product_price_1", harga1);
+            formData.append("product_price_2", harga2);
+            formData.append("product_type", "Bucket Bunga");
+            formData.append("product_description", deskripsi);
+            formData.append("shop_id", 1);
+            formData.append("product_image", saveImage);
+
+            axios
+              .post("http://localhost:8081/createproduct", formData, {
+                headers: {
+                  "Content-Type": "multipart/form-data",
+                },
+              })
+              .then((response) => {
+                console.log(response);
+              })
+              .catch((error) => {
+                console.log(error);
+              });
         }
-
-        function uploadImage() {
-            if(!saveImage){
-                console.log("gagal bosku");
-            }else{
-                let formData = new FormData();
-                formData.append("gambar" , saveImage)
-                formData.append("nama" , nama)
-                formData.append("deskripsi" , deskripsi)
-                formData.append("harga1" , harga1)
-                formData.append("harga2" , harga2)
-
-                const config = {     
-                    headers: { 'content-type': 'multipart/form-data' }
-                }
-
-                axios.post("http://localhost:8081/createproduct", formData, config)
-                .then(response => {
-                    console.log(response);
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-            }
-        }
+    }
 
     const [open, setOpen] = React.useState(false);
 
@@ -123,7 +125,7 @@ function AddProductPage() {
                     style={{ display: 'none' }}
                     id="raised-button-file"
                     type="file"
-                    onChange={handleUploadChang1}
+                    onChange={handleUploadChange}
                 />
                 <label htmlFor="raised-button-file">
                     <Button variant="contained" color="primary" component="span" style={{
@@ -178,7 +180,7 @@ function AddProductPage() {
                     />
                 </div>
                 <br />
-                <Button variant="contained" color="primary" onClick={handleClick} type='submit' style={{
+                <Button variant="contained" color="primary" onClick={() => uploadImage()} type='submit' style={{
                     width: "100%", marginBottom: "10px" 
                 }}>
                     Upload Produk
