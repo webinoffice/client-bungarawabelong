@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
 
+
 function LoginPage() {
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
