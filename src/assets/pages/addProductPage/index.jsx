@@ -41,10 +41,12 @@ function AddProductPage() {
         setSaveImage(uploaded);
     }
 
-    function uploadImage() {
+    function uploadImage(e) {
+        
         if(!saveImage){
             console.log("Upload gambar gagal");
         } else{
+            handleClick();
             const formData = new FormData();
             formData.append("product_name", nama);
             formData.append("product_price_1", harga1);
@@ -53,20 +55,19 @@ function AddProductPage() {
             formData.append("product_description", deskripsi);
             formData.append("shop_id", location.state);
             formData.append("product_image", saveImage);
-
+            
             axios
-              .post("http://localhost:8081/createproduct", formData, {
+            .post("http://localhost:8081/createproduct", formData, {
                 headers: {
-                  "Content-Type": "multipart/form-data",
+                    "Content-Type": "multipart/form-data",
                 },
-              })
-              .then((response) => {
+            })
+            .then((response) => {
                 console.log(response);
-              })
-              .catch((error) => {
+            })
+            .catch((error) => {
                 console.log(error);
-              });
-              handleClick();
+            });
         }
     }
 

@@ -18,6 +18,7 @@ import axios from 'axios';
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
 import ShareIcon from '@mui/icons-material/Share';
+import Cookies from 'js-cookie';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -57,6 +58,7 @@ function ProductDetailPage() {
   const [namap,setNamap] = useState(location.state.para.nama)
   const [id,setId] = useState(location.state.para.shopid)
   const [nama,setNama] = useState('')
+  const [cookie, setCookie] = useState([]);
 
   const handleSubmit = async (e) => {
     try {
@@ -165,7 +167,12 @@ function ProductDetailPage() {
           }> 
             <ShareIcon color='primary'/>
           </IconButton>
-          <IconButton>
+          <IconButton onClick={()=>{
+            // setCookie(Cookies.set('pantek', JSON.stringify(location.state.para)))
+            // setCookie(Cookies.get('pantek'))
+            // console.log(JSON.parse(cookie));
+            // cookie.push(())
+          }}>
             <StarBorderIcon color="primary" />
           </IconButton>
         </div>

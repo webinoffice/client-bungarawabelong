@@ -32,7 +32,7 @@ const theme = createTheme({
       main: '#00793F',
     },
     merah: {
-      main: ''
+      main: '#952323',
     }
   },
 });

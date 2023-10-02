@@ -60,20 +60,19 @@ export default function NotificationList() {
       formData.append("transaction_id", id);
       formData.append("transaction_proof", saveImage);
     
-    // window.location.reload();
       axios
-        .post("http://localhost:8081/updatetransaction", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-      // handleClick();
+      .post("http://localhost:8081/updatetransaction", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+      window.location.reload();
     }
   }
 
@@ -118,12 +117,18 @@ export default function NotificationList() {
               margin: "10px 20px 0px 20px",
             }}
           >
-            {data.transaction_description}
+            Pesan: {data.transaction_description}
           </Typography>
           {data.transaction_status === "Completed" ? (
-            <a href={data.transaction_proof}>
-              Lihat Bukti Pembayaran
-            </a>
+            <div style={
+              {margin: '10px 20px 0px 20px',}
+            }>
+              <Button variant='contained' color='primary' fullWidth style={{
+                color: 'white',
+              }} onClick={()=>window.location.href = data.transaction_proof}>
+                Lihat Bukti Pembayaran
+              </Button>
+            </div>
           ) : (
             ""
           )}
@@ -135,19 +140,31 @@ export default function NotificationList() {
                   display: "flex",
                   justifyContent: "center",
                   justifyItems: "center",
-                  width: "60%",
-                  margin: "auto",
+                  maxWidth: '60%',
+                  margin: 'auto',
+                  marginTop: '10px',
                   aspectRatio: "1/1",
                   objectFit: "cover",
                 }}
               />
+              <div style={
+                  {margin: '10px 20px 0px 20px',}
+              }>
+                <Button variant='contained' color='merah' fullWidth style={{
+                  color: 'white',
+                }} onClick={()=>setImage(null)}>
+                  Hapus Gambar
+                </Button>
+              </div>
             </div>
           ) : (
             ""
           )}
           {data.transaction_status === "Pending" ? (
-            <div style={{ margin: "10px 20px 10px 20px" }}>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div style={{ margin: "10px 20px 10px 20px"}}>
+              <div style={{ 
+                margin: 0, 
+              }}>
                 <input
                   accept="image/*"
                   style={{ display: "none" }}
@@ -158,7 +175,7 @@ export default function NotificationList() {
                 <label
                   htmlFor="raised-button-file"
                   style={{
-                    width: "49%",
+                    // width: "48%",
                   }}
                 >
                   {image === null ? (
@@ -169,6 +186,7 @@ export default function NotificationList() {
                       style={{
                         width: "49%",
                         marginBottom: "10px",
+                        marginRight: '2%'
                       }}
                     >
                       Upload Bukti
@@ -185,6 +203,7 @@ export default function NotificationList() {
                     style={{
                       width: "49%",
                       marginBottom: "10px",
+                      marginRight: '2%',
                     }}
                     onClick={() => uploadImage(data.transaction_id)}
                   >

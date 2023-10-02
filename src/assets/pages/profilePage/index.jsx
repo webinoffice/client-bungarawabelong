@@ -55,7 +55,7 @@ function ProfilePage() {
       refreshToken();
     }, []);
 
-    function uploadImage () {
+    function uploadImage (e) {
         if(!update_profile) {
             axios
               .post("http://localhost:8081/updateshopwithoutpic", {
@@ -168,15 +168,26 @@ function ProfilePage() {
               }}
             />
           </div>
-          <div style={{ display: "flex" }}>
+          <div style={{ 
+            display: "flex",
+            margin: 0,
+            padding: 0,
+          }}>
             <input
               accept="image/*"
-              style={{ display: "none" }}
+              style={{ 
+                display: "none",
+                margin: 0,
+                padding: 0,
+              }}
               id="raised-button-file"
               type="file"
               onChange={handleUploadChange}
             />
-            <label htmlFor="raised-button-file">
+            <label htmlFor="raised-button-file" style={{
+              margin: 0,
+              padding: 0,
+            }}>
               <Button
                 variant="contained"
                 color="primary"
