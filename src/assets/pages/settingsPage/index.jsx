@@ -48,7 +48,7 @@ function SettingsPage() {
             }}>
                 Pengaturan  
             </Typography>
-            <SettingsMenu/>
+            <SettingsMenu para = {isLogin}/>
             <NavigationBar para={step}/>
         </div>) : 
         (<div className={css.topPallete}>

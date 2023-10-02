@@ -12,9 +12,11 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useState } from 'react';
 
-export default function SettingsMenu() {
+export default function SettingsMenu({ para }) {
   const navigate = useNavigate();
+  const [value, setValue] = useState(para);
 
   const logout = async () => {
     navigate("/");
@@ -22,18 +24,23 @@ export default function SettingsMenu() {
   };
 
   return (
-    <Box sx={{ maxWidth: 500, bgcolor: 'background.paper' }}>
+    <Box sx={{ maxWidth: 500, bgcolor: "background.paper" }}>
       <nav aria-label="main mailbox folders">
         <List>
           <ListItem disablePadding>
-            <ListItemButton onClick={()=> navigate('/profile')}>
+            <ListItemButton
+              onClick={() => navigate("/profile", { state: value })}
+            >
               <ListItemIcon>
-                <AccountCircleIcon color='primary'/>
+                <AccountCircleIcon color="primary" />
               </ListItemIcon>
-              <ListItemText primary="Profil Toko" sx={{
-                fontWeight:"bold", 
-                fontSize: 20,
-                }}/>
+              <ListItemText
+                primary="Profil Toko"
+                sx={{
+                  fontWeight: "bold",
+                  fontSize: 20,
+                }}
+              />
             </ListItemButton>
           </ListItem>
         </List>
@@ -41,38 +48,51 @@ export default function SettingsMenu() {
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                <InventoryIcon color='primary'/>
+                <InventoryIcon color="primary" />
               </ListItemIcon>
-              <ListItemText primary="Kelola Produk" sx={{
-                fontWeight:"bold", 
-                fontSize: 20,
-                }}/>
+              <ListItemText
+                primary="Kelola Produk"
+                sx={{
+                  fontWeight: "bold",
+                  fontSize: 20,
+                }}
+              />
             </ListItemButton>
           </ListItem>
         </List>
         <List>
           <ListItem disablePadding>
-            <ListItemButton onClick={()=> navigate('/add-product')}>
+            <ListItemButton
+              onClick={() => navigate("/add-product", { state: value })}
+            >
               <ListItemIcon>
-                <AddCircleOutlineIcon color='primary'/>
+                <AddCircleOutlineIcon color="primary" />
               </ListItemIcon>
-              <ListItemText primary="Tambah Produk" sx={{
-                fontWeight:"bold", 
-                fontSize: 20,
-                }}/>
+              <ListItemText
+                primary="Tambah Produk"
+                sx={{
+                  fontWeight: "bold",
+                  fontSize: 20,
+                }}
+              />
             </ListItemButton>
           </ListItem>
         </List>
         <List>
           <ListItem disablePadding>
-            <ListItemButton onClick={()=> navigate('/notification')}>
+            <ListItemButton
+              onClick={() => navigate("/notification", { state: value })}
+            >
               <ListItemIcon>
-                <NotificationsActiveIcon color='primary'/>
+                <NotificationsActiveIcon color="primary" />
               </ListItemIcon>
-              <ListItemText primary="Notifikasi Pesanan" sx={{
-                fontWeight:"bold", 
-                fontSize: 20,
-                }}/>
+              <ListItemText
+                primary="Notifikasi Pesanan"
+                sx={{
+                  fontWeight: "bold",
+                  fontSize: 20,
+                }}
+              />
             </ListItemButton>
           </ListItem>
         </List>

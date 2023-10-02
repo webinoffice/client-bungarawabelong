@@ -8,7 +8,7 @@ import { useState } from "react";
 import { alignProperty } from '@mui/material/styles/cssUtils';
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 // import { use } from '../../../../../server/routes/login';
 
 // const shop = [
@@ -25,7 +25,8 @@ import { useNavigate } from 'react-router-dom';
 // ]
 
 function AddProductPage() {
-
+    const location = useLocation();
+    console.log(location.state);
     const [image, setImage] = useState("http://fakeimg.pl/500x500/");
     const [saveImage, setSaveImage] = useState(null);
     const [nama, setNama] = useState("");
@@ -50,7 +51,7 @@ function AddProductPage() {
             formData.append("product_price_2", harga2);
             formData.append("product_type", "Bucket Bunga");
             formData.append("product_description", deskripsi);
-            formData.append("shop_id", 1);
+            formData.append("shop_id", location.state);
             formData.append("product_image", saveImage);
 
             axios
@@ -65,6 +66,7 @@ function AddProductPage() {
               .catch((error) => {
                 console.log(error);
               });
+              handleClick();
         }
     }
 
@@ -80,6 +82,7 @@ function AddProductPage() {
         }
     
         setOpen(false);
+        navigate("/settings")
     };
     const action = (
         <React.Fragment>

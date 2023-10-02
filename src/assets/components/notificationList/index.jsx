@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useState,useEffect } from 'react';
 import axios from 'axios';
 
@@ -26,15 +26,17 @@ const notification=[
 ]
 
 export default function NotificationList() {
+  const [saveImage, setSaveImage] = useState(null);
+  const [image, setImage] = useState(null);
+  const location = useLocation();
   const [transaksi, setTransaksi] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const grabHandler = async () => {
       try {
-        const response = await axios.get("http://localhost:8081/gettransactionbyshopid/" + 1);
+        const response = await axios.get("http://localhost:8081/gettransactionbyshopid/" + location.state);
         setTransaksi(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -43,7 +45,37 @@ export default function NotificationList() {
     grabHandler();
   }, []);
 
-  const handleUpdate  = async()=>{}
+  function handleUploadChange(e) {
+    const uploaded = e.target.files[0];
+    setImage(URL.createObjectURL(uploaded));
+    setSaveImage(uploaded);
+  }
+
+
+  function uploadImage(id) {
+    if (!saveImage) {
+      console.log("Upload gambar gagal");
+    } else {
+      const formData = new FormData();
+      formData.append("transaction_id", id);
+      formData.append("transaction_proof", saveImage);
+    
+    // window.location.reload();
+      axios
+        .post("http://localhost:8081/updatetransaction", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      // handleClick();
+    }
+  }
 
   return (
     <div>
@@ -88,33 +120,96 @@ export default function NotificationList() {
           >
             {data.transaction_description}
           </Typography>
+          {data.transaction_status === "Completed" ? (
+            <a href={data.transaction_proof}>
+              Lihat Bukti Pembayaran
+            </a>
+          ) : (
+            ""
+          )}
+          {data.transaction_status === "Pending" && image !== null ? (
+            <div style={{ width: "100%" }}>
+              <img
+                src={image}
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  justifyItems: "center",
+                  width: "60%",
+                  margin: "auto",
+                  aspectRatio: "1/1",
+                  objectFit: "cover",
+                }}
+              />
+            </div>
+          ) : (
+            ""
+          )}
           {data.transaction_status === "Pending" ? (
             <div style={{ margin: "10px 20px 10px 20px" }}>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() =>
-                    {axios.post("http://localhost:8081/updatetransaction/", {
-                      transaction_id: data.transaction_id,
-                    })
-                    window.location.reload()
-                    }
-                  }
+                <input
+                  accept="image/*"
+                  style={{ display: "none" }}
+                  id="raised-button-file"
+                  type="file"
+                  onChange={handleUploadChange}
+                />
+                <label
+                  htmlFor="raised-button-file"
                   style={{
                     width: "49%",
-                    marginBottom: "10px",
                   }}
                 >
-                  Terima Pesanan
-                </Button>
+                  {image === null ? (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      component="span"
+                      style={{
+                        width: "49%",
+                        marginBottom: "10px",
+                      }}
+                    >
+                      Upload Bukti
+                    </Button>
+                  ) : (
+                    ""
+                  )}
+                </label>
+                {image !== null ? (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    component="span"
+                    style={{
+                      width: "49%",
+                      marginBottom: "10px",
+                    }}
+                    onClick={() => uploadImage(data.transaction_id)}
+                  >
+                    Terima Pesanan
+                  </Button>
+                ) : (
+                  ""
+                )}
+                <input
+                  accept="image/*"
+                  style={{ display: "none" }}
+                  id="raised-button-file"
+                  type="file"
+                  onChange={handleUploadChange}
+                ></input>
                 <Button
                   variant="contained"
                   color="error"
-                  onClick={() =>
-                    {axios.delete("http://localhost:8081/canceltransaction/"+ data.transaction_id) 
-                    window.location.reload()}
-                  }
+                  onClick={() => {
+                    axios.delete(
+                      "http://localhost:8081/canceltransaction/" +
+                        data.transaction_id
+                    );
+                    window.location.reload();
+                  }}
                   style={{
                     width: "49%",
                     marginBottom: "10px",
@@ -125,9 +220,7 @@ export default function NotificationList() {
               </div>
             </div>
           ) : (
-            <div style={{ margin: "10px 20px 10px 20px" }}>
-              
-            </div>
+            <div style={{ margin: "10px 20px 10px 20px" }}></div>
           )}
         </Card>
       ))}
