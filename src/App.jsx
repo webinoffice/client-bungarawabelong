@@ -17,6 +17,9 @@ import {
   TransitionGroup,
   CSSTransition
 } from "react-transition-group";
+import ProductSearchPage from './assets/pages/productSearchPage';
+import ProductEditPage from './assets/pages/productEditPage';
+import ProductEditDetailPage from './assets/pages/productEditDetailPage';
 
 
 const theme = createTheme({
@@ -32,7 +35,10 @@ const theme = createTheme({
       main: '#00793F',
     },
     merah: {
-      main: ''
+      main: '#952323',
+    },
+    pink: {
+      main: '#D988B9',
     }
   },
 });
@@ -48,11 +54,14 @@ function App() {
           <Route path="/favourite" element={<FavouritePage/>}/>
           <Route path="/settings" element={<SettingsPage/>}/>
           <Route path='/product' element={<ProductPage/>}/>
+          <Route path='/product/:search' element={<ProductSearchPage/>}/>
           <Route path='/detail' element={<ProductDetailPage/>}/>
           <Route path='/share-detail/:product_id' element={<ProductSharePage/>}/>
           <Route path='/shop' element={<ShopDetailPage/>}/>
           <Route path="/profile" element={<ProfilePage/>}/>
           <Route path="/add-product" element={<AddProductPage/>}/>
+          <Route path="/edit-product" element={<ProductEditPage/>}/>
+          <Route path="/edit-product/detail" element={<ProductEditDetailPage/>}/>
           <Route path="/notification" element={<NotificationPage/>}/>
 
         </Routes>

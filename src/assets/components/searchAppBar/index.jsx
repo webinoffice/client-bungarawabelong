@@ -8,6 +8,8 @@ import IconButton from '@mui/material/IconButton';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import axios from 'axios';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -51,22 +53,44 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function SearchAppBar() {
   const navigate = useNavigate();
+  const [value, setValue] = useState('');
+  const [productSearch, setProductSearch] = useState([]);
+  console.log(value);
+
+  const handleKeyDown = async (e) => {
+    if (e.key === 'Enter') {
+      console.log('ler')
+      try {
+        const response = await axios.get("http://localhost:8081/search/"+value);
+        setProductSearch(response.data);
+        console.log(response.data);
+        navigate('/product/'+value, {state: response.data});
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed" color='background'>
         <Toolbar>
-          <img src='./logo1.png' style={{height:23}} onClick={()=>navigate('/')}/>
+          <img src='./logo1.png' style={{height:50}} onClick={()=>navigate('/')}/>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}/>
           <Search>
             <SearchIconWrapper>
               <SearchIcon size="large"
                 edge="end"
                 color="primary"
-                aria-label="menu"/>
+                aria-label="menu"
+                
+                />
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="Cari..."
               inputProps={{ 'aria-label': 'search' }}
+              onChange={e=>(setValue(e.target.value))}
+              onKeyDown={handleKeyDown}
             />
           </Search>
         </Toolbar>

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import css from "./addProductPage.module.css";
+import css from "./productEditDetailPage.module.css";
 import PageAppBar from '../../components/pageAppBar';
 import { Avatar, Typography, IconButton, Button, Divider, TextField } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -24,16 +24,20 @@ import { useNavigate, useLocation } from 'react-router-dom';
 //     }
 // ]
 
-function AddProductPage() {
+function ProductEditDetailPage() {
     const location = useLocation();
     console.log(location.state);
-    const [image, setImage] = useState("http://fakeimg.pl/500x500/");
+    const [image, setImage] = useState(location.state.product_image);
     const [saveImage, setSaveImage] = useState(null);
-    const [nama, setNama] = useState("");
-    const [deskripsi, setDeskripsi] = useState("");
-    const [harga1, setHarga1] = useState("");
-    const [harga2, setHarga2] = useState("");
+
+    const [nama, setNama] = useState(location.state.product_name);
+    const [harga1, setHarga1] = useState(location.state.product_price_1);
+    const [harga2, setHarga2] = useState(location.state.product_price_2);
+    const [tipe,setTipe] = useState(location.state.product_type);
+    const [deskripsi, setDeskripsi] = useState(location.state.product_description);
     const navigate = useNavigate();
+
+    const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
     function handleUploadChange(e){
         const uploaded = e.target.files[0];
@@ -41,23 +45,40 @@ function AddProductPage() {
         setSaveImage(uploaded);
     }
 
+    const updateNonPic = async () => {
+        // await delay(1000);
+        try {
+            await axios.post("http://localhost:8081/updateproductwithoutpic", {
+                product_name: nama,
+                product_price_1: harga1,
+                product_price_2: harga2,
+                product_type: tipe,
+                product_description: deskripsi,
+                product_id: location.state.product_id,
+            })
+        } catch (error) {
+          console.log(error);
+        }
+    }
+
     function uploadImage(e) {
         e.preventDefault();
         if(!saveImage){
-            console.log("Upload gambar gagal");
+            handleClick();
+            updateNonPic();
         } else{
             handleClick();
             const formData = new FormData();
             formData.append("product_name", nama);
             formData.append("product_price_1", harga1);
             formData.append("product_price_2", harga2);
-            formData.append("product_type", "Bucket Bunga");
+            formData.append("product_type", tipe);
             formData.append("product_description", deskripsi);
-            formData.append("shop_id", location.state);
+            formData.append("product_id", location.state.product_id);
             formData.append("product_image", saveImage);
             
             axios
-            .post("http://localhost:8081/createproduct", formData, {
+            .post("http://localhost:8081/updateproduct", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
@@ -73,7 +94,7 @@ function AddProductPage() {
 
     const [open, setOpen] = React.useState(false);
 
-    const handleClick = () => {
+    const handleClick = async() => {
         setOpen(true);
     };
     
@@ -108,7 +129,7 @@ function AddProductPage() {
                 maxWidth: '500px',
                 margin: 2
             }}>
-                Tambah Produk
+                Edit {location.state.product_name}
             </Typography>
             <div style={{
                 width: '100%'
@@ -137,7 +158,7 @@ function AddProductPage() {
                         marginTop: "10px",
                         marginBottom: "10px",
                     }}>
-                        Upload Gambar
+                        Ubah Gambar
                     </Button>
                 </label> 
             </div>
@@ -153,6 +174,7 @@ function AddProductPage() {
                     type="text"
                     label="Nama Produk"
                     variant="outlined"
+                    defaultValue={location.state.product_name}
                     onChange={e => setNama(e.target.value)}
                 />
                 <br />
@@ -163,6 +185,7 @@ function AddProductPage() {
                     variant="outlined"
                     multiline
                     minRows={2}
+                    defaultValue={location.state.product_description}
                     onChange={e => setDeskripsi(e.target.value)}
                 />
                 <br />
@@ -172,6 +195,7 @@ function AddProductPage() {
                         type="text"
                         label="Kisaran Harga"
                         variant="outlined"
+                        defaultValue={location.state.product_price_1}
                         onChange={e => setHarga1(e.target.value)}
                     />
                     <span sty>-</span>
@@ -180,6 +204,7 @@ function AddProductPage() {
                         type="text"
                         label="Kisaran Harga"
                         variant="outlined"
+                        defaultValue={location.state.product_price_2}
                         onChange={e => setHarga2(e.target.value)}
                     />
                 </div>
@@ -187,7 +212,7 @@ function AddProductPage() {
                 <Button variant="contained" color="primary" type='submit' style={{
                     width: "100%", marginBottom: "10px" 
                 }}>
-                    Upload Produk
+                    Perbarui Produk
                 </Button>
                 <div style={{height: '50px'}}/>
             </form>
@@ -202,4 +227,4 @@ function AddProductPage() {
     );
 }
 
-export default AddProductPage;
+export default ProductEditDetailPage;

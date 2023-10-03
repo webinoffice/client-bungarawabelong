@@ -6,6 +6,8 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 const dummy = [
     {
@@ -35,20 +37,22 @@ const dummy = [
   ];
 
 function FavouriteMap() {
+    const navigate = useNavigate();
+    const existingArray = Cookies.getJSON('myArray') || [];
     return ( 
     <Box sx={{ maxWidth: '500px', margin: 2 }}>
         <Grid container rowSpacing={2} columnSpacing={2} sx={{maxWidth: '500px'}}>
-            {dummy.map((data, index)=>(
+            {existingArray.map((data, index)=>(
                 <Grid item xs={6}>
                     <Card sx={{ 
                         maxWidth: '500px',
                         borderRadius: 1,
                     }}>
-                        <CardActionArea onClick={null}>
+                        <CardActionArea onClick={()=>(navigate('/detail', {state: {para: (data)}}))}>
                             <CardMedia
                                 component="img"
                                 height="150"
-                                image={data.imgPath}
+                                image={data.product_image}
                                 alt="flower"
                             />
                             <CardContent>
@@ -56,10 +60,10 @@ function FavouriteMap() {
                                     fontWeight:"bold", 
                                     fontSize: 20,
                                 }}>
-                                    {data.label}
+                                    {data.product_name}
                                 </Typography>
                                 <Typography variant="body2" color="text.secondary">
-                                    {data.label2}
+                                    {data.shop.shop_name}
                                 </Typography>
                             </CardContent>
                         </CardActionArea>

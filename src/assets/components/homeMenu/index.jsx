@@ -30,10 +30,10 @@ export default function HomeMenu() {
                         fontWeight:"bold", 
                         fontSize: 20,
                     }}>
-                        Buket Bunga (Flower Bouquette)
+                        Jelajahi Produk
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                        Cari berbagai varian buket bunga dari berbagai mitra disini
+                        Cari berbagai varian bunga papan dari berbagai mitra disini
                     </Typography>
                 </CardContent>
             </CardActionArea>
