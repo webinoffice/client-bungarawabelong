@@ -56,6 +56,8 @@ function ProfilePage() {
     }, []);
 
     function uploadImage (e) {
+      e.preventDefault();
+      handleClick();
         if(!update_profile) {
             axios
               .post("http://localhost:8081/updateshopwithoutpic", {
@@ -100,7 +102,6 @@ function ProfilePage() {
                 console.log(error);
               });
         }
-        handleClick();
     }
 
     const [open, setOpen] = React.useState(false);
@@ -204,7 +205,7 @@ function ProfilePage() {
           </div>
         </div>
         <Divider />
-        <form
+        <form onSubmit={uploadImage}
           style={{
             marginBottom: "auto",
             marginTop: "10px",
@@ -277,7 +278,6 @@ function ProfilePage() {
               width: "100%",
               marginBottom: "10px",
             }}
-            onClick={() => uploadImage()}
           >
             Ubah Profil
           </Button>

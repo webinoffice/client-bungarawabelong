@@ -7,7 +7,8 @@ import css from './productDetailPage.module.css';
 import PageAppBar from '../../components/pageAppBar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Divider from '@mui/material/Divider';
 import { TextField, Button } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
@@ -42,11 +43,10 @@ const shop = [
 ]
 
 function ProductDetailPage() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const location = useLocation();
-  console.log(location);
   const [message, setMessage] = React.useState('');
 
   const handleStepChange = (step) => {
@@ -58,53 +58,91 @@ function ProductDetailPage() {
   const [namap,setNamap] = useState(location.state.para.nama)
   const [id,setId] = useState(location.state.para.shopid)
   const [nama,setNama] = useState('')
-  const [cookie, setCookie] = useState([]);
+
 
   const handleSubmit = async (e) => {
     try {
-        e.preventDefault();
-        const response = await axios.post('http://localhost:8081/createtransaction', {
-            product_id: location.state.para.product_id,
-            transaction_description: desc,
-            transaction_name: nama,
-            transaction_phonenum: no
-        });
-        setMessage('Pesananmu telah dikirim ke penjual. Penjual akan segera menghubungimu');
-        handleClick();
-        console.log(response.data);
+      e.preventDefault();
+      const response = await axios.post('http://localhost:8081/createtransaction', {
+        product_id: location.state.para.product_id,
+        transaction_description: desc,
+        transaction_name: nama,
+        transaction_phonenum: no
+      });
+      setMessage('Pesananmu telah dikirim ke penjual. Penjual akan segera menghubungimu');
+      handleClick();
+      console.log(response.data);
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
-    }
+  }
 
-    const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
 
-    const handleClick = () => {
-        setOpen(true);
-    };
+  const handleClick = () => {
+      setOpen(true);
+  };
     
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-        return;
-        }
-    
-        setOpen(false);
-        navigate('/');
-    };
+  const handleClose = (event, reason) => {
+      if (reason === 'clickaway') {
+      return;
+      }
+  
+      setOpen(false);
+      navigate('/');
+  };
 
 
-    const action = (
-        <React.Fragment>
-            <IconButton
-                size="small"
-                aria-label="close"
-                color="inherit"
-                onClick={handleClose}
-            >
-                <CloseIcon fontSize="small" />
-            </IconButton>
-        </React.Fragment>
+  const action = (
+      <React.Fragment>
+          <IconButton
+              size="small"
+              aria-label="close"
+              color="inherit"
+              onClick={handleClose}
+          >
+              <CloseIcon fontSize="small" />
+          </IconButton>
+      </React.Fragment>
+  );
+
+  const cookieAdd = (newObject) => {
+    const existingArray = Cookies.getJSON('myArray') || [];
+  
+    existingArray.push(newObject);
+
+    console.log(existingArray);
+  
+    Cookies.set('myArray', existingArray);
+    setArrayInCookie(true);
+  }
+
+  const cookieDelete = (objectToDelete) => {
+    const existingArray = Cookies.getJSON('myArray') || [];
+  
+    const indexToDelete = existingArray.findIndex(
+      (item) => item.product_id === objectToDelete.product_id
     );
+  
+    if (indexToDelete !== -1) {
+      existingArray.splice(indexToDelete, 1);
+      console.log(existingArray);
+      Cookies.set('myArray', existingArray);
+      setArrayInCookie(false);
+    }
+  }
+  const [arrayInCookie, setArrayInCookie] = useState(false);
+  useEffect(() => {
+    const existingArray = Cookies.getJSON('myArray') || [];
+    if (existingArray.findIndex(
+      (item) => item.product_id === location.state.para.product_id
+    ) > -1) {
+      return setArrayInCookie(true);
+    } else {
+      return setArrayInCookie(false);
+    }
+  }, []);
+  console.log(arrayInCookie);
 
   return (
     <div className={css.topPallete}>
@@ -167,14 +205,20 @@ function ProductDetailPage() {
           }> 
             <ShareIcon color='primary'/>
           </IconButton>
-          <IconButton onClick={()=>{
-            // setCookie(Cookies.set('pantek', JSON.stringify(location.state.para)))
-            // setCookie(Cookies.get('pantek'))
-            // console.log(JSON.parse(cookie));
-            // cookie.push(())
-          }}>
-            <StarBorderIcon color="primary" />
-          </IconButton>
+          
+          {!arrayInCookie ? (
+            <IconButton 
+              onClick={()=>cookieAdd(location.state.para)}
+            >
+              <FavoriteBorderIcon color="primary" />
+            </IconButton>
+          ) : (
+            <IconButton 
+              onClick={()=>cookieDelete(location.state.para)}
+            >
+              <FavoriteIcon color="pink" />
+            </IconButton>
+          )}
         </div>
       </div>
       <Typography

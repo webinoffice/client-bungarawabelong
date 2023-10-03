@@ -46,7 +46,7 @@ export default function SettingsMenu({ para }) {
         </List>
         <List>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={()=> navigate('/edit-product', {state: value})}>
               <ListItemIcon>
                 <InventoryIcon color="primary" />
               </ListItemIcon>

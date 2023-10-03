@@ -33,13 +33,13 @@ export default function HomeMenu() {
                         Jelajahi Produk
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                        Cari berbagai varian buket bunga dan bunga papan dari berbagai mitra disini
+                        Cari berbagai varian bunga papan dari berbagai mitra disini
                     </Typography>
                 </CardContent>
             </CardActionArea>
         </Card>
 
-        {/* <Card sx={{ 
+        <Card sx={{ 
             maxWidth: 500,
             borderRadius: 1,
             margin: 3,
@@ -64,7 +64,7 @@ export default function HomeMenu() {
                     </Typography>
                 </CardContent>
             </CardActionArea>
-        </Card> */}
+        </Card>
     </div>
   );
 }
