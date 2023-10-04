@@ -52,11 +52,11 @@ function ProductSearchMap({location}) {
                 <CardContent>
                   <Typography gutterBottom sx={{
                     fontWeight: "bold",
-                    fontSize: 20,
+                    fontSize: 16,
                   }}>
                     {data.product_name}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography variant="body2" color="text.secondary" sx={{fontSize: 12}}>
                     {data.shop.shop_name}
                   </Typography>
                 </CardContent>
