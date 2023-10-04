@@ -2,25 +2,11 @@ import * as React from 'react';
 import css from "./profilePage.module.css";
 import PageAppBar from '../../components/pageAppBar';
 import { Avatar, Typography, IconButton, Button, Divider, TextField, Snackbar } from '@mui/material';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import axios from 'axios';
 import { useState } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import CloseIcon from "@mui/icons-material/Close";
-
-const shop = [
-    {
-        imgPath:
-            'https://www.w3schools.com/w3images/avatar2.png',
-        shopName: 'Toko Bunga',
-        shopAddress: 'Jl. Gamon Gacor',
-        shopPhone: "0812292929",
-        shopDescription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-        bankName: "BCA",
-        bankNum: "7627363726",
-    }
-]
 
 function ProfilePage() {
     const navigate =useNavigate();
@@ -156,7 +142,6 @@ function ProfilePage() {
             display: "flex",
             width: "100%",
             marginBottom: "20px",
-            // justifyContent: "space-between",
           }}
         >
           <div style={{ display: "flex", marginLeft: "20px" }}>

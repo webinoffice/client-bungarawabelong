@@ -57,12 +57,16 @@ function FavouriteMap() {
                             />
                             <CardContent>
                                 <Typography gutterBottom sx={{
-                                    fontWeight:"bold", 
+                                    maxWidth: '100%',
+                                    whiteSpace: 'nowrap',
+                                    fontWeight: "bold",
                                     fontSize: 16,
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis'
                                 }}>
                                     {data.product_name}
                                 </Typography>
-                                <Typography variant="body2" color="text.secondary" sx={{fontSize: 12}}>
+                                <Typography variant="body2" color="text.secondary" sx={{fontSize: 14}}>
                                     {data.shop.shop_name}
                                 </Typography>
                             </CardContent>

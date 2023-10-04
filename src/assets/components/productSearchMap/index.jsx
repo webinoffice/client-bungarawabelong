@@ -9,10 +9,6 @@ import { CardActionArea } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const dummy = [
-  // Your dummy data...
-];
-
 function ProductSearchMap({location}) {
   const [produk, setProduk] = useState([]);
   const navigate = useNavigate();
@@ -30,10 +26,8 @@ function ProductSearchMap({location}) {
 
     grabHandler();
   }, []);
-  console.log(location);
 
   return (
-    console.log(produk),
     <Box sx={{ maxWidth: '500px', margin: 2 }}>
       <Grid container rowSpacing={2} columnSpacing={2} sx={{ maxWidth: '500px' }}>
         {location.map((data, index) => (
@@ -51,8 +45,12 @@ function ProductSearchMap({location}) {
                 />
                 <CardContent>
                   <Typography gutterBottom sx={{
+                    maxWidth: '100%',
+                    whiteSpace: 'nowrap',
                     fontWeight: "bold",
                     fontSize: 16,
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis'
                   }}>
                     {data.product_name}
                   </Typography>

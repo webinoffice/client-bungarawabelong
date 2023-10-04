@@ -9,15 +9,9 @@
     import axios from 'axios';
     import { useNavigate } from 'react-router-dom';
 
-    const dummy = [
-      // Your dummy data...
-    ];
-
     function ProductEditMap({props}) {
       const [produk, setProduk] = useState([]);
       const navigate = useNavigate();
-      console.log({props})
-      console.log(produk)
 
       useEffect(() => {
         const grabHandler = async () => {
@@ -33,10 +27,9 @@
         };
 
         grabHandler();
-      }, []); // Empty dependency array ensures this effect runs once on component mount
+      }, []);
 
       return (
-        // console.log(produk),
         <Box sx={{ maxWidth: "500px", margin: 2 }}>
           <Grid
             container
@@ -63,20 +56,24 @@
                       image={
                           data.product_image
                           || "default_image_url"
-                      } // Provide a default image URL
+                      }
                       alt="flower"
                     />
                     <CardContent>
                       <Typography
                         gutterBottom
                         sx={{
+                          maxWidth: '100%',
+                          whiteSpace: 'nowrap',
                           fontWeight: "bold",
                           fontSize: 16,
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis'
                         }}
                       >
                         {data.product_name}
                       </Typography>
-                      <Typography variant="body2" color="text.secondary" sx={{fontSize: 12}}>
+                      <Typography variant="body2" color="text.secondary" sx={{fontSize: 14}}>
                         {data.shop.shop_name}
                       </Typography>
                     </CardContent>

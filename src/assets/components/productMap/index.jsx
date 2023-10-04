@@ -9,10 +9,6 @@ import { CardActionArea } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const dummy = [
-  // Your dummy data...
-];
-
 function ProductMap() {
   const [produk, setProduk] = useState([]);
   const navigate = useNavigate();
@@ -32,7 +28,6 @@ function ProductMap() {
   }, []);
 
   return (
-    console.log(produk),
     <Box sx={{ maxWidth: '500px', margin: 2 }}>
       <Grid container rowSpacing={2} columnSpacing={2} sx={{ maxWidth: '500px' }}>
         {produk.map((data, index) => (
@@ -50,12 +45,16 @@ function ProductMap() {
                 />
                 <CardContent>
                   <Typography gutterBottom sx={{
+                    maxWidth: '100%',
+                    whiteSpace: 'nowrap',
                     fontWeight: "bold",
                     fontSize: 16,
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis'
                   }}>
                     {data.product_name}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary" sx={{fontSize:12}}>
+                  <Typography variant="body2" color="text.secondary" sx={{fontSize:14}}>
                     {data.shop.shop_name}
                   </Typography>
                 </CardContent>

@@ -1,32 +1,15 @@
 import * as React from 'react';
 import css from "./addProductPage.module.css";
 import PageAppBar from '../../components/pageAppBar';
-import { Avatar, Typography, IconButton, Button, Divider, TextField } from '@mui/material';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { Typography, IconButton, Button, Divider, TextField } from '@mui/material';
 import axios from 'axios';
 import { useState } from "react";
-import { alignProperty } from '@mui/material/styles/cssUtils';
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate, useLocation } from 'react-router-dom';
-// import { use } from '../../../../../server/routes/login';
-
-// const shop = [
-//     {
-//         imgPath:
-//             'https://www.w3schools.com/w3images/avatar2.png',
-//         shopName: 'Toko Bunga',
-//         shopAddress: 'Jl. Gamon Gacor',
-//         shopPhone: "0812292929",
-//         shopDescription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-//         bankName: "BCA",
-//         bankNum: "7627363726",
-//     }
-// ]
 
 function AddProductPage() {
     const location = useLocation();
-    console.log(location.state);
     const [image, setImage] = useState("http://fakeimg.pl/500x500/");
     const [saveImage, setSaveImage] = useState(null);
     const [nama, setNama] = useState("");

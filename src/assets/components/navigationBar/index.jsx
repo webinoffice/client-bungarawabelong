@@ -11,16 +11,6 @@ import { useNavigate } from 'react-router-dom';
 export default function NavigationBar({para}) {
   const navigate = useNavigate();
   const [value, setValue] = useState(para);
-  
-  // const handleChange = () => {
-  //   if (newValue === 0){
-  //     navigate('/')
-  //   } else if (newValue === 1){
-  //     navigate('/favourite')
-  //   } else if(newValue === 2){
-  //     navigate('/settings')
-  //   }
-  // };
 
   return (
     <Box sx={{position: 'fixed', bottom: 0, left: 0, right: 0 }}>
