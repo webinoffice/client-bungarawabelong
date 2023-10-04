@@ -19,7 +19,7 @@ export default function SettingsMenu({ para }) {
   const [value, setValue] = useState(para);
 
   const logout = async () => {
-    navigate("/");
+    navigate("/land");
     await axios.delete("http://localhost:8081/logout");
   };
 

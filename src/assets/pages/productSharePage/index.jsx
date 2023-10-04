@@ -64,7 +64,7 @@ function ProductSharePage() {
         }
     
         setOpen(false);
-        navigate('/');
+        navigate('/land');
     };
     const action = (
         <React.Fragment>

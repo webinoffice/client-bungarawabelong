@@ -19,7 +19,7 @@ export default function NavigationBar({para}) {
         value={value}
         onChange={(event, newValue) => {
           if (newValue === 0){
-            navigate('/')
+            navigate('/land')
           } else if (newValue === 1){
             navigate('/favourite')
           } else if(newValue === 2){
