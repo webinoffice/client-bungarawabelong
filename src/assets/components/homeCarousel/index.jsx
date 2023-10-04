@@ -15,7 +15,7 @@ const images = [
   {
     label: 'Dummy 2',
     imgPath:
-      'https://www.wallpaperwalaa.com/wp-content/uploads/2019/04/3D-FLOWER-7-400x250.jpg',
+      'https://plus.unsplash.com/premium_photo-1696273225510-5ff59f0e5695?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80',
   },
   {
     label: 'Dummy 3',
