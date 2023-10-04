@@ -11,6 +11,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 function ProductEditDetailPage() {
     const location = useLocation();
     const [image, setImage] = useState(location.state.product_image);
+    const [oldImage, setOldImage] = useState(location.state.product_image);
     const [saveImage, setSaveImage] = useState(null);
 
     const [nama, setNama] = useState(location.state.product_name);
@@ -56,6 +57,7 @@ function ProductEditDetailPage() {
             formData.append("product_description", deskripsi);
             formData.append("product_id", location.state.product_id);
             formData.append("product_image", saveImage);
+            formData.append("oldImage", oldImage.split("/").pop());
             
             axios
             .post("http://localhost:8081/updateproduct", formData, {

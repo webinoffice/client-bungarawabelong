@@ -19,6 +19,7 @@ function ProfilePage() {
     const [shop_bankname, setShop_bankname] = useState("");
     const [shop_banknum, setShop_banknum] = useState("");
     const [shop_profile, setShop_profile] = useState(null);
+    const [oldImage, setOldImage] = useState("");
 
     const refreshToken = async () => {
       try {
@@ -32,6 +33,7 @@ function ProfilePage() {
         setShop_bankname(decoded.shop_bankname);
         setShop_banknum(decoded.shop_banknum);
         setShop_profile(decoded.shop_profile);
+        setOldImage(decoded.shop_profile);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -74,6 +76,7 @@ function ProfilePage() {
             formData.append("shop_banknum", shop_banknum);
             formData.append("shop_bankname", shop_bankname);
             formData.append("shop_id", shop_id);
+            formData.append("oldImage", oldImage.split("/").pop());
 
             axios
               .post("http://localhost:8081/updateshop", formData, {
