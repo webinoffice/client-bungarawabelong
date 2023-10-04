@@ -7,7 +7,6 @@ import { useLocation } from 'react-router-dom';
 
 function ProductEditPage() {
     const location = useLocation();
-    console.log(location.state);
     return (
         <div className={css.topPallete}>
             <PageAppBar/>

@@ -24,23 +24,6 @@ import Cookies from 'js-cookie';
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const index = 1;
-const images = [
-  {
-    label: 'Dummy 1',
-    price: '100000',
-    price2: '150000',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-    imgPath:
-      'https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60',
-  },
-];
-const shop = [
-    {
-        imgPath:
-            'https://www.w3schools.com/w3images/avatar2.png',
-        shopName: 'Toko Bunga',
-    }
-]
 
 function ProductDetailPage() {
   const navigate = useNavigate();
@@ -71,7 +54,6 @@ function ProductDetailPage() {
       });
       setMessage('Pesananmu telah dikirim ke penjual. Penjual akan segera menghubungimu');
       handleClick();
-      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -110,8 +92,6 @@ function ProductDetailPage() {
     const existingArray = Cookies.getJSON('myArray') || [];
   
     existingArray.push(newObject);
-
-    console.log(existingArray);
   
     Cookies.set('myArray', existingArray);
     setArrayInCookie(true);
@@ -126,7 +106,6 @@ function ProductDetailPage() {
   
     if (indexToDelete !== -1) {
       existingArray.splice(indexToDelete, 1);
-      console.log(existingArray);
       Cookies.set('myArray', existingArray);
       setArrayInCookie(false);
     }
@@ -142,7 +121,10 @@ function ProductDetailPage() {
       return setArrayInCookie(false);
     }
   }, []);
-  console.log(arrayInCookie);
+
+  function formatRupiah(number) {
+    return new Intl.NumberFormat("id-ID").format(number);
+  }
 
   return (
     <div className={css.topPallete}>
@@ -154,7 +136,7 @@ function ProductDetailPage() {
           onChangeIndex={handleStepChange}
           enableMouseEvents
         >
-          <div key={images.label}>
+          <div>
             {Math.abs(activeStep - index) <= 2 ? (
               <Box
                 component="img"
@@ -180,7 +162,6 @@ function ProductDetailPage() {
           margin: "20px",
           marginTop: "10px",
           marginBottom: "10px",
-          textAlign: "center",
         }}
       >
         <Typography
@@ -188,9 +169,10 @@ function ProductDetailPage() {
           color="primary"
           sx={{
             fontWeight: "bold",
-            fontSize: 22,
+            fontSize: 20,
             marginBottom: "auto",
             marginTop: "auto",
+            width: '60%',
           }}
         >
           {location.state.para.product_name}
@@ -226,13 +208,13 @@ function ProductDetailPage() {
         color="error"
         sx={{
           fontWeight: "bold",
-          fontSize: 18,
+          fontSize: 16,
           marginLeft: "20px",
           marginRight: "20px",
         }}
       >
-        Harga Berkisar di Rp. {location.state.para.product_price_1} -{" "}
-        {location.state.para.product_price_2}
+        Harga Berkisar di Rp. {formatRupiah(location.state.para.product_price_1)} -{" "}
+        {formatRupiah(location.state.para.product_price_2)}
       </Typography>
       <Divider />
       <Typography
@@ -259,7 +241,7 @@ function ProductDetailPage() {
         <div style={{ display: "flex" }}>
           <Avatar
             alt="Remy Sharp"
-            src={shop[0].imgPath}
+            src={location.state.para.shop.shop_profile}
             sx={{
               height: "50px",
               width: "50px",

@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import SearchIcon from '@mui/icons-material/Search';
-import IconButton from '@mui/material/IconButton';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import { useNavigate } from 'react-router-dom';
@@ -41,7 +40,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     width: '100%',
@@ -55,15 +53,12 @@ export default function SearchAppBar() {
   const navigate = useNavigate();
   const [value, setValue] = useState('');
   const [productSearch, setProductSearch] = useState([]);
-  console.log(value);
 
   const handleKeyDown = async (e) => {
     if (e.key === 'Enter') {
-      console.log('ler')
       try {
         const response = await axios.get("http://localhost:8081/search/"+value);
         setProductSearch(response.data);
-        console.log(response.data);
         navigate('/product/'+value, {state: response.data});
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -75,7 +70,7 @@ export default function SearchAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed" color='background'>
         <Toolbar>
-          <img src='./logo1.png' style={{height:50}} onClick={()=>navigate('/')}/>
+          <img src='./logo1.png' style={{height:35}} onClick={()=>navigate('/')}/>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}/>
           <Search>
             <SearchIconWrapper>

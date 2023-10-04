@@ -4,35 +4,9 @@ import HomeCarousel from '../../components/homeCarousel';
 import HomeMenu from '../../components/homeMenu';
 import NavigationBar from '../../components/navigationBar';
 import SearchAppBar from '../../components/searchAppBar';
-import { Map, Wrapper, Status } from "@googlemaps/react-wrapper";
 import { Typography } from '@mui/material';
 
 const step = 0;
-
-// let map;
-
-// async function initMap() {
-//   // The location of Uluru
-//   const position = { lat: -25.344, lng: 131.031 };
-//   // Request needed libraries.
-//   //@ts-ignore
-//   const { Map } = await google.maps.importLibrary("maps");
-//   const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
-
-//   // The map, centered at Uluru
-//   map = new Map(document.getElementById("map"), {
-//     zoom: 4,
-//     center: position,
-//     mapId: "DEMO_MAP_ID",
-//   });
-
-//   // The marker, positioned at Uluru
-//   const marker = new AdvancedMarkerElement({
-//     map: map,
-//     position: position,
-//     title: "Uluru",
-//   });
-// }
 
 function HomePage() {
     return (
@@ -62,9 +36,6 @@ function HomePage() {
 ">
                     </iframe>
                 </div>
-                {/* <style>
-                    .mapouter{position:relative;text-align:right;width:100%;height:400px;}.gmap_canvas {overflow:hidden;background:none!important;width:100%;height:400px;}.gmap_iframe {height:400px!important;}
-                </style> */}
             </div>
             <div style={{height: '50px'}}></div>
             <NavigationBar para={step}/>

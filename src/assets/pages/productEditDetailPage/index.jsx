@@ -2,31 +2,14 @@ import * as React from 'react';
 import css from "./productEditDetailPage.module.css";
 import PageAppBar from '../../components/pageAppBar';
 import { Avatar, Typography, IconButton, Button, Divider, TextField } from '@mui/material';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import axios from 'axios';
 import { useState } from "react";
-import { alignProperty } from '@mui/material/styles/cssUtils';
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate, useLocation } from 'react-router-dom';
-// import { use } from '../../../../../server/routes/login';
-
-// const shop = [
-//     {
-//         imgPath:
-//             'https://www.w3schools.com/w3images/avatar2.png',
-//         shopName: 'Toko Bunga',
-//         shopAddress: 'Jl. Gamon Gacor',
-//         shopPhone: "0812292929",
-//         shopDescription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-//         bankName: "BCA",
-//         bankNum: "7627363726",
-//     }
-// ]
 
 function ProductEditDetailPage() {
     const location = useLocation();
-    console.log(location.state);
     const [image, setImage] = useState(location.state.product_image);
     const [saveImage, setSaveImage] = useState(null);
 
@@ -37,8 +20,6 @@ function ProductEditDetailPage() {
     const [deskripsi, setDeskripsi] = useState(location.state.product_description);
     const navigate = useNavigate();
 
-    const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
     function handleUploadChange(e){
         const uploaded = e.target.files[0];
         setImage(URL.createObjectURL(uploaded));
@@ -46,7 +27,6 @@ function ProductEditDetailPage() {
     }
 
     const updateNonPic = async () => {
-        // await delay(1000);
         try {
             await axios.post("http://localhost:8081/updateproductwithoutpic", {
                 product_name: nama,
@@ -141,7 +121,6 @@ function ProductEditDetailPage() {
                 }}/>
             </div>
             <div style={{
-                // width: '100%',
                 marginLeft: '20px',
                 marginRight: '20px'
             }}>

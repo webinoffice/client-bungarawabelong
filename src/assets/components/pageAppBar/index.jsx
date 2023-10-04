@@ -24,14 +24,6 @@ export default function PageAppBar() {
             <ArrowBackIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}/>
-          {/* <IconButton
-            size="large"
-            edge="end"
-            color="primary"
-            aria-label="menu"
-          >
-            <SearchIcon />
-          </IconButton> */}
         </Toolbar>
       </AppBar>
       <Toolbar/>

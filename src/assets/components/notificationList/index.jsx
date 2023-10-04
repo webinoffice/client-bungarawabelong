@@ -8,23 +8,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useState,useEffect } from 'react';
 import axios from 'axios';
 
-const notification=[
-  {
-    sender: 'Bernando',
-    productname: 'Buket Bunga Mawar',
-    phone: '099292929',
-    description: 'sdhajkhdsajk sahdjksahdjka hsjkdhjdh hfjhf jdshjkfhs k',
-    sendDate: '14:01, 27 Agustus 2023'
-  },
-  {
-    sender: 'Jordan',
-    productname: 'Buket Bunga Melati',
-    phone: '09929292229',
-    description: 'sdhajkhdsajk sdadsasahdjksahdjka hsjkdhjdh hfjhf jdshjkfhs k',
-    sendDate: '17:09, 28 Agustus 2023'
-  }
-]
-
 export default function NotificationList() {
   const [saveImage, setSaveImage] = useState(null);
   const [image, setImage] = useState(null);
@@ -174,9 +157,6 @@ export default function NotificationList() {
                 />
                 <label
                   htmlFor="raised-button-file"
-                  style={{
-                    // width: "48%",
-                  }}
                 >
                   {image === null ? (
                     <Button

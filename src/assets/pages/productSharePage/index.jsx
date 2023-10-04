@@ -21,23 +21,6 @@ import CloseIcon from '@mui/icons-material/Close';
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const index = 1;
-const images = [
-  {
-    label: 'Dummy 1',
-    price: '100000',
-    price2: '150000',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-    imgPath:
-      'https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60',
-  },
-];
-const shop = [
-    {
-        imgPath:
-            'https://www.w3schools.com/w3images/avatar2.png',
-        shopName: 'Toko Bunga',
-    }
-]
 
 function ProductSharePage() {
     const {product_id} = useParams();
@@ -64,7 +47,6 @@ function ProductSharePage() {
                 transaction_phonenum: no
             });
             handleClick();
-            console.log(response.data);
         } catch (error) {
             console.log(error);
         }
@@ -102,7 +84,6 @@ function ProductSharePage() {
             try {
               const response = await axios.get("http://localhost:8081/productbyproductid/" + product_id);
               setProduct(response.data);
-              console.log(response.data);
             } catch (error) {
               console.error("Error fetching data:", error);
             }
@@ -111,7 +92,6 @@ function ProductSharePage() {
         getProduct();
     },[product_id])
 
-    console.log(product[0]);
   return (product.length>0?
     
     (<div className={css.topPallete}>
@@ -123,7 +103,7 @@ function ProductSharePage() {
           onChangeIndex={handleStepChange}
           enableMouseEvents
         >
-          <div key={images.label}>
+          <div>
             {Math.abs(activeStep - index) <= 2 ? (
               <Box
                 component="img"
@@ -136,7 +116,6 @@ function ProductSharePage() {
                   objectFit: "cover",
                 }}
                 src={product[0].product_image}
-                // alt={product.product_image}
               />
             ) : null}
           </div>
@@ -206,7 +185,7 @@ function ProductSharePage() {
         <div style={{ display: "flex" }}>
           <Avatar
             alt="Remy Sharp"
-            src={shop[0].imgPath}
+            src={product[0].shop.shop_profile}
             sx={{
               height: "50px",
               width: "50px",
