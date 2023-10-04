@@ -7,7 +7,7 @@ function Splash() {
     const navigate = useNavigate();
     useEffect(() => {
         const myFunction = () => {
-          navigate('/');
+          navigate('/land');
         };
     
         const timeoutId = setTimeout(myFunction, 5000);

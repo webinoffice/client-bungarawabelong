@@ -48,8 +48,8 @@ function App() {
     <ThemeProvider theme={theme}>
       <HashRouter>
         <Routes>
-          <Route exact path="/" element={<HomePage/>}/>
-          <Route path="/land" element={<Splash/>}/>
+          <Route exact path="/" element={<Splash/>}/>
+          <Route path="/land" element={<HomePage/>}/>
           <Route path="/login" element={<LoginPage/>}/>
           <Route path="/favourite" element={<FavouritePage/>}/>
           <Route path="/settings" element={<SettingsPage/>}/>

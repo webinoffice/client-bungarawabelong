@@ -71,7 +71,7 @@ function ProductDetailPage() {
       }
   
       setOpen(false);
-      navigate('/');
+      navigate('/land');
   };
 
 

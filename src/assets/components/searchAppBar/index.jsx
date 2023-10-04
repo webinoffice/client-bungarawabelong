@@ -70,7 +70,7 @@ export default function SearchAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed" color='background'>
         <Toolbar>
-          <img src='./logo1.png' style={{height:35}} onClick={()=>navigate('/')}/>
+          <img src='./logo1.png' style={{height:35}} onClick={()=>navigate('/land')}/>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}/>
           <Search>
             <SearchIconWrapper>
