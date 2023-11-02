@@ -57,7 +57,7 @@ function App() {
           <Route path='/product/:search' element={<ProductSearchPage/>}/>
           <Route path='/detail' element={<ProductDetailPage/>}/>
           <Route path='/share-detail/:product_id' element={<ProductSharePage/>}/>
-          <Route path='/shop' element={<ShopDetailPage/>}/>
+          <Route path='/shop/:shop_id' element={<ShopDetailPage/>}/>
           <Route path="/profile" element={<ProfilePage/>}/>
           <Route path="/add-product" element={<AddProductPage/>}/>
           <Route path="/edit-product" element={<ProductEditPage/>}/>

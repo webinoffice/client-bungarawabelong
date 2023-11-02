@@ -71,7 +71,10 @@ function ProductDetailPage() {
       }
   
       setOpen(false);
-      navigate('/land');
+      if (message === 'Tautan produk telah di salin ke clipboard'){
+      }else{
+        navigate('/land');
+      }
   };
 
 
@@ -245,25 +248,48 @@ function ProductDetailPage() {
             sx={{
               height: "50px",
               width: "50px",
+              margin: 'auto'
             }}
           />
-          <Typography
-            gutterBottom
-            color="primary"
-            sx={{
-              fontWeight: "bold",
-              fontSize: 18,
-              marginBottom: "auto",
-              marginTop: "auto",
-              marginLeft: "20px",
-            }}
-          >
-            {location.state.para.shop.shop_name}
-          </Typography>
+          <div>
+            <Typography
+              gutterBottom
+              color="primary"
+              sx={{
+                fontWeight: "bold",
+                fontSize: 18,
+                marginBottom: "auto",
+                marginTop: "auto",
+                marginLeft: "20px",
+              }}
+            >
+              {location.state.para.shop.shop_name}
+            </Typography>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{
+                marginLeft: "20px",
+                marginRight: "20px",
+              }}
+            >
+              No WhatsApp: {location.state.para.shop.shop_phone}
+            </Typography>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{
+                marginLeft: "20px",
+                marginRight: "20px",
+              }}
+            >
+              {location.state.para.shop.shop_bankname} - {location.state.para.shop.shop_banknum}
+            </Typography>
+          </div>
         </div>
         <IconButton
           onClick={() =>
-            navigate("/shop", { state: location.state.para })
+            navigate("/shop/"+location.state.para.shop_id, { state: location.state.para })
           }
         >
           <ArrowForwardIcon color="primary"></ArrowForwardIcon>

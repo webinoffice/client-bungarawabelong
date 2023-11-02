@@ -10,13 +10,33 @@ import Avatar from '@mui/material/Avatar';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
-import { useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import ShopMap from '../../components/shopMap';
+import ShareIcon from '@mui/icons-material/Share';
+import { IconButton } from '@mui/material';
+import Snackbar from '@mui/material/Snackbar';
+import CloseIcon from '@mui/icons-material/Close';
+import axios from 'axios';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 function ShopDetailPage() {
+    const {shop_id} = useParams();
+    const [product, setProduct] = useState();
+    useEffect(()=>{
+        const getProduct = async () => {
+            try {
+              const response = await axios.get("http://localhost:8081/getshopbyid/" + shop_id);
+              setProduct(response.data);
+            } catch (error) {
+              console.error("Error fetching data:", error);
+            }
+          };
+      
+        getProduct();
+    },[])
+
     const theme = useTheme();
     const [activeStep, setActiveStep] = React.useState(0);
     const location = useLocation();
@@ -26,96 +46,142 @@ function ShopDetailPage() {
     const handleStepChange = (step) => {
         setActiveStep(step);
     };
+    const [open, setOpen] = React.useState(false);
 
-    return (
-    <div className={css.topPallete}>
-        <PageAppBar/>
-        <div style={{
-            display: 'flex',
-            margin: '20px',
-            justifyContent: 'space-between'
-        }}>
-            <div style={{display: 'flex'}}>
-                <Avatar alt="Remy Sharp" src={location.state.shop.shop_profile} sx={{
-                    height: '50px',
-                    width: '50px'
-                }} />
-                <Typography gutterBottom color='primary' sx={{
-                    fontWeight:"bold", 
-                    fontSize: 18,
-                    marginBottom: 'auto',
-                    marginTop: 'auto',
-                    marginLeft: '20px'
+    const handleClick = () => {
+        setOpen(true);
+    };
+        
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+        return;
+        }
+    
+        setOpen(false);
+    };
+
+
+    const action = (
+        <React.Fragment>
+            <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={handleClose}
+            >
+                <CloseIcon fontSize="small" />
+            </IconButton>
+        </React.Fragment>
+    );
+    
+    if (product) {
+        
+        return (
+        <div className={css.topPallete}>
+            <PageAppBar/>
+            <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                margin: '20px'
+            }}>
+                <div style={{display:'flex'}}>
+                    <Avatar alt="Remy Sharp" src={product.shop_profile} sx={{
+                        height: '50px',
+                        width: '50px'
+                    }} />
+                    <Typography gutterBottom color='primary' sx={{
+                        fontWeight:"bold", 
+                        fontSize: 18,
+                        marginBottom: 'auto',
+                        marginTop: 'auto',
+                        marginLeft: '20px'
+                    }}>
+                        {product.shop_name}
+                    </Typography>
+                </div>
+                <IconButton onClick={()=>{
+                    navigator.clipboard.writeText(
+                    "http://localhost:3000/#/shop/" + product.shop_id)
+                    handleClick();
+                }
+                }> 
+                    <ShareIcon color='primary'/>
+                </IconButton>
+            </div>
+            <Typography variant="body2" color="text.secondary" sx={{
+                marginBottom: '10px',
+                marginLeft: '20px',
+                marginRight: '20px',
+            }}>
+                {product.shop_description}
+            </Typography>
+            <Divider/>
+            <div style={{
+                display:"flex", 
+                marginLeft: '20px', 
+                marginRight: '20px', 
+                marginTop: '10px', 
+                marginBottom: '10px'
+            }}>
+                <LocationOnIcon sx={{marginRight:'10px'}}/>
+                <Typography variant="body2" color="text.secondary" sx={{
+                    alignSelf: 'center',
+                    fontWeight: 'bold'
                 }}>
-                    {location.state.shop.shop_name}
+                    {product.shop_address}
                 </Typography>
             </div>
-        </div>
-        <Typography variant="body2" color="text.secondary" sx={{
-            marginBottom: '10px',
-            marginLeft: '20px',
-            marginRight: '20px',
-        }}>
-            {location.state.shop.shop_description}
-        </Typography>
-        <Divider/>
-        <div style={{
-            display:"flex", 
-            marginLeft: '20px', 
-            marginRight: '20px', 
-            marginTop: '10px', 
-            marginBottom: '10px'
-        }}>
-            <LocationOnIcon sx={{marginRight:'10px'}}/>
-            <Typography variant="body2" color="text.secondary" sx={{
-                alignSelf: 'center',
-                fontWeight: 'bold'
+            <div style={{
+                display:"flex", 
+                marginLeft: '20px', 
+                marginRight: '20px', 
+                marginTop: '10px', 
+                marginBottom: '10px'
             }}>
-                {location.state.shop.shop_address}
-            </Typography>
-        </div>
-        <div style={{
-            display:"flex", 
-            marginLeft: '20px', 
-            marginRight: '20px', 
-            marginTop: '10px', 
-            marginBottom: '10px'
-        }}>
-            <PhoneAndroidIcon sx={{marginRight:'10px'}}/>
-            <Typography variant="body2" color="text.secondary" sx={{
-                alignSelf: 'center',
-                fontWeight: 'bold'
+                <PhoneAndroidIcon sx={{marginRight:'10px'}}/>
+                <Typography variant="body2" color="text.secondary" sx={{
+                    alignSelf: 'center',
+                    fontWeight: 'bold'
+                }}>
+                    {product.shop_phone}
+                </Typography>
+            </div>
+            <div style={{
+                display:"flex", 
+                marginLeft: '20px', 
+                marginRight: '20px', 
+                marginTop: '10px', 
+                marginBottom: '10px'
             }}>
-                {location.state.shop.shop_phone}
-            </Typography>
+                <AccountBalanceIcon sx={{marginRight:'10px'}}/>
+                <Typography variant="body2" color="text.secondary" sx={{
+                    alignSelf: 'center',
+                    fontWeight: 'bold'
+                }}>
+                    {product.shop_bankname} - {product.shop_banknum}
+                </Typography>
+            </div>
+            <Divider/>
+            <Typography gutterBottom sx={{
+                    fontWeight:"bold", 
+                    fontSize: 16,
+                    maxWidth: '500px',
+                    margin: 2
+                }}>
+                    Produk Toko
+                </Typography>
+            <ShopMap props={product}/>
+            
+            <Snackbar
+                open={open}
+                autoHideDuration={2000}
+                onClose={handleClose}
+                message={'Tautan toko telah di salin ke clipboard'}
+                action={action}
+            />
         </div>
-        <div style={{
-            display:"flex", 
-            marginLeft: '20px', 
-            marginRight: '20px', 
-            marginTop: '10px', 
-            marginBottom: '10px'
-        }}>
-            <AccountBalanceIcon sx={{marginRight:'10px'}}/>
-            <Typography variant="body2" color="text.secondary" sx={{
-                alignSelf: 'center',
-                fontWeight: 'bold'
-            }}>
-                {location.state.shop.shop_bankname} - {location.state.shop.shop_banknum}
-            </Typography>
-        </div>
-        <Divider/>
-        <Typography gutterBottom sx={{
-                fontWeight:"bold", 
-                fontSize: 16,
-                maxWidth: '500px',
-                margin: 2
-            }}>
-                Produk Toko
-            </Typography>
-        <ShopMap props={location.state}/>
-    </div>
-  );
+      );
+    }
 }
 
 export default ShopDetailPage;
