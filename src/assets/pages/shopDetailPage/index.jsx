@@ -36,7 +36,7 @@ function ShopDetailPage() {
       
         getProduct();
     },[])
-
+    console.log(product);
     const theme = useTheme();
     const [activeStep, setActiveStep] = React.useState(0);
     const location = useLocation();
@@ -146,21 +146,23 @@ function ShopDetailPage() {
                     {product.shop_phone}
                 </Typography>
             </div>
-            <div style={{
-                display:"flex", 
-                marginLeft: '20px', 
-                marginRight: '20px', 
-                marginTop: '10px', 
-                marginBottom: '10px'
-            }}>
-                <AccountBalanceIcon sx={{marginRight:'10px'}}/>
-                <Typography variant="body2" color="text.secondary" sx={{
-                    alignSelf: 'center',
-                    fontWeight: 'bold'
+            {product.shop_banks.map((data,index)=>(
+                <div style={{
+                    display:"flex", 
+                    marginLeft: '20px', 
+                    marginRight: '20px', 
+                    marginTop: '10px', 
+                    marginBottom: '10px'
                 }}>
-                    {product.shop_bankname} - {product.shop_banknum}
-                </Typography>
-            </div>
+                    <AccountBalanceIcon sx={{marginRight:'10px'}}/>
+                    <Typography variant="body2" color="text.secondary" sx={{
+                        alignSelf: 'center',
+                        fontWeight: 'bold'
+                    }}>
+                        {data.bank_name} - {data.bank_number}
+                    </Typography>
+                </div>
+            ))}
             <Divider/>
             <Typography gutterBottom sx={{
                     fontWeight:"bold", 

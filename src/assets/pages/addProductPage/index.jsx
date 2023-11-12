@@ -7,6 +7,11 @@ import { useState } from "react";
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate, useLocation } from 'react-router-dom';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 function AddProductPage() {
     const location = useLocation();
@@ -15,6 +20,7 @@ function AddProductPage() {
     const [nama, setNama] = useState("");
     const [deskripsi, setDeskripsi] = useState("");
     const [harga1, setHarga1] = useState("");
+    const [type, setType] = useState('Bucket Bunga');
     const navigate = useNavigate();
 
     function handleUploadChange(e){
@@ -22,6 +28,9 @@ function AddProductPage() {
         setImage(URL.createObjectURL(uploaded));
         setSaveImage(uploaded);
     }
+    const handleChange = (event) => {
+        setType(event.target.value);
+    };
 
     function uploadImage(e) {
         e.preventDefault();
@@ -32,7 +41,7 @@ function AddProductPage() {
             const formData = new FormData();
             formData.append("product_name", nama);
             formData.append("product_price", harga1);
-            formData.append("product_type", "Bucket Bunga");
+            formData.append("product_type", type);
             formData.append("product_description", deskripsi);
             formData.append("shop_id", location.state);
             formData.append("product_image", saveImage);
@@ -157,8 +166,21 @@ function AddProductPage() {
                     onChange={e => setHarga1(e.target.value)}
                 />
                 <br />
+                <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">Tipe Bunga</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={type}
+                            label="Tipe Bunga"
+                            onChange={handleChange}
+                        >
+                        <MenuItem value={'Bucket Bunga'}>Bucket Bunga</MenuItem>
+                        <MenuItem value={'Bunga Papan'}>Bunga Papan</MenuItem>
+                    </Select>
+                </FormControl>
                 <Button variant="contained" color="primary" type='submit' style={{
-                    width: "100%", marginBottom: "10px" 
+                    width: "100%", marginBottom: "10px", marginTop: '10px' 
                 }}>
                     Upload Produk
                 </Button>

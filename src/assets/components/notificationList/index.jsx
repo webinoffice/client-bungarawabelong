@@ -5,6 +5,10 @@ import Button from '@mui/material/Button';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState,useEffect } from 'react';
 import axios from 'axios';
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
+import Box from '@mui/material/Box';
 
 export default function NotificationList() {
   const [saveImage, setSaveImage] = useState(null);
@@ -57,6 +61,12 @@ export default function NotificationList() {
     }
   }
 
+  const steps = [
+    'Pesanan dikemas',
+    'Pesanan dikirim',
+    'Pesanan selesai',
+  ];
+
   return (
     <div>
       {transaksi.map((data, index) => (
@@ -89,7 +99,7 @@ export default function NotificationList() {
               margin: "0px 20px 0px 20px",
             }}
           >
-            {data.transaction_time}
+            {data.transaction_date}, {data.transaction_time}
           </Typography>
           <Typography
             variant="body2"
@@ -104,11 +114,110 @@ export default function NotificationList() {
             <div style={
               {margin: '10px 20px 0px 20px',}
             }>
-              <Button variant='contained' color='primary' fullWidth style={{
-                color: 'white',
-              }} onClick={()=>window.location.href = data.transaction_proof}>
-                Lihat Bukti Pembayaran
-              </Button>
+              <Stepper activeStep={2} alternativeLabel sx={{
+                margin: '0px 0px 10px 0px'
+              }}>
+                {steps.map((label) => (
+                  <Step key={label}>
+                    <StepLabel>{label}</StepLabel>
+                  </Step>
+                ))}
+              </Stepper>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+              }}>
+                <Button variant='contained' color='error' fullWidth style={{
+                  color: 'white',
+                }} onClick={()=>window.location.href = data.transaction_proof}>
+                  Lihat Bukti Pembayaran
+                </Button>
+
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+          {data.transaction_status === "Dikirim" ? (
+            <div style={
+              {margin: '10px 20px 0px 20px',}
+            }>
+              <Stepper activeStep={1} alternativeLabel sx={{
+                margin: '0px 0px 10px 0px'
+              }}>
+                {steps.map((label) => (
+                  <Step key={label}>
+                    <StepLabel>{label}</StepLabel>
+                  </Step>
+                ))}
+              </Stepper>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                height: '50px'
+              }}>
+                <Button variant='contained' color='error' style={{
+                  color: 'white',
+                  width: '49%'
+                }} onClick={()=>{
+                  axios.post('http://localhost:8081/updatetrans', {
+                    transaction_status: 'Completed',
+                    transaction_id: data.transaction_id,
+                  })
+                  window.location.reload()
+                }}>
+                  Selesaikan Transaksi
+                </Button>
+                <Button variant='contained' color='primary' style={{
+                  color: 'white',
+                  width: '49%'
+                }} onClick={()=>window.location.href = data.transaction_proof}>
+                  Lihat Bukti Pembayaran
+                </Button>
+
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+          {data.transaction_status === "Dikemas" ? (
+            <div style={
+              {margin: '10px 20px 0px 20px',}
+            }>
+              <Stepper activeStep={0} alternativeLabel sx={{
+                margin: '0px 0px 10px 0px'
+              }}>
+                {steps.map((label) => (
+                  <Step key={label}>
+                    <StepLabel>{label}</StepLabel>
+                  </Step>
+                ))}
+              </Stepper>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                height: '50px'
+              }}>
+                <Button variant='contained' color='error' style={{
+                  color: 'white',
+                  width: '49%'
+                }} onClick={()=>{
+                  axios.post('http://localhost:8081/updatetrans', {
+                    transaction_status: 'Dikirim',
+                    transaction_id: data.transaction_id,
+                  })
+                  window.location.reload()
+                }}>
+                  Barang Dikirim
+                </Button>
+                <Button variant='contained' color='primary' style={{
+                  color: 'white',
+                  width: '49%'
+                }} onClick={()=>window.location.href = data.transaction_proof}>
+                  Lihat Bukti Pembayaran
+                </Button>
+
+              </div>
             </div>
           ) : (
             ""
@@ -201,7 +310,7 @@ export default function NotificationList() {
                   variant="contained"
                   color="error"
                   onClick={() => {
-                    axios.delete(
+                    axios.post(
                       "http://localhost:8081/canceltransaction/" +
                         data.transaction_id
                     );

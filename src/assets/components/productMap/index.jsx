@@ -9,7 +9,7 @@ import { CardActionArea } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-function ProductMap() {
+function ProductMap({para}) {
   const [produk, setProduk] = useState([]);
   const navigate = useNavigate();
 
@@ -17,8 +17,14 @@ function ProductMap() {
     const grabHandler = async () => {
       try {
         const response = await axios.get("http://localhost:8081/productall");
-        setProduk(response.data);
-        console.log(response.data);
+        if (para === 'Bucket Bunga') {
+          const sortedData = response.data.sort((a, b) => a.product_type.localeCompare(b.product_type));
+          setProduk(sortedData);
+        } else {
+          const sortedData = response.data.sort((a, b) => b.product_type.localeCompare(a.product_type));
+          setProduk(sortedData);
+        }
+        
       } catch (error) {
         console.error("Error fetching data:", error);
       }

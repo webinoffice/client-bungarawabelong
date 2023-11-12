@@ -9,7 +9,8 @@ import { useNavigate } from 'react-router-dom';
 export default function HomeMenu() {
 
     const navigate = useNavigate();
-    const handleProduct = ()=> navigate('/product')
+    const handleBuket = ()=> navigate('/product',{ state: 'Bucket Bunga' });
+    const handlePapan = ()=> navigate('/product',{ state: 'Bunga Papan' });
 
   return (
     <div>
@@ -18,7 +19,7 @@ export default function HomeMenu() {
             borderRadius: 1,
             margin: 3,
         }}>
-            <CardActionArea onClick={handleProduct}>
+            <CardActionArea onClick={handleBuket}>
                 <CardMedia
                     component="img"
                     height="100"
@@ -45,7 +46,7 @@ export default function HomeMenu() {
             margin: 3,
             // marginBottom: 10,
         }}>
-            <CardActionArea onClick={handleProduct}>
+            <CardActionArea onClick={handlePapan}>
                 <CardMedia
                     component="img"
                     height="100"

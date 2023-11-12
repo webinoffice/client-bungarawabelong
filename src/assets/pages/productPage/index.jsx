@@ -3,8 +3,10 @@ import css from './productPage.module.css';
 import { Typography } from '@mui/material';
 import SearchAppBar from '../../components/searchAppBar';
 import ProductMap from '../../components/productMap';
+import { useLocation } from 'react-router-dom';
 
 function ProductPage() {
+    const location = useLocation();
     return (
         <div className={css.topPallete}>
             <SearchAppBar/>
@@ -16,7 +18,7 @@ function ProductPage() {
             }}>
                 Daftar Produk
             </Typography>
-            <ProductMap/>
+            <ProductMap para={location.state}/>
         </div>
     );
 }

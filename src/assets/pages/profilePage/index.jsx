@@ -7,6 +7,9 @@ import { useState } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import CloseIcon from "@mui/icons-material/Close";
+import BankMap from '../../components/bankMap';
+import BankAdd from '../../components/bankAdd';
+
 
 function ProfilePage() {
     const navigate =useNavigate();
@@ -16,10 +19,9 @@ function ProfilePage() {
     const [shop_phone, setShop_phone] = useState("");
     const [shop_description, setShop_description] = useState("");
     const [shop_address, setShop_address] = useState("");
-    const [shop_bankname, setShop_bankname] = useState("");
-    const [shop_banknum, setShop_banknum] = useState("");
     const [shop_profile, setShop_profile] = useState(null);
     const [oldImage, setOldImage] = useState("");
+    const [banks, setBanks] = useState([]);
 
     const refreshToken = async () => {
       try {
@@ -30,10 +32,10 @@ function ProfilePage() {
         setShop_phone(decoded.shop_phone);
         setShop_description(decoded.shop_description);
         setShop_address(decoded.shop_address);
-        setShop_bankname(decoded.shop_bankname);
-        setShop_banknum(decoded.shop_banknum);
         setShop_profile(decoded.shop_profile);
         setOldImage(decoded.shop_profile);
+        setBanks(decoded.shop_bank);
+        console.log(decoded);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -54,8 +56,6 @@ function ProfilePage() {
                 shop_description: shop_description,
                 shop_address: shop_address,
                 shop_phone: shop_phone,
-                shop_banknum: shop_banknum,
-                shop_bankname: shop_bankname
               }, {
 
               })
@@ -73,8 +73,6 @@ function ProfilePage() {
             formData.append("shop_address", shop_address);
             formData.append("shop_profile", update_profile);
             formData.append("shop_phone", shop_phone);
-            formData.append("shop_banknum", shop_banknum);
-            formData.append("shop_bankname", shop_bankname);
             formData.append("shop_id", shop_id);
             formData.append("oldImage", oldImage.split("/").pop());
 
@@ -231,7 +229,7 @@ function ProfilePage() {
           />
           <br />
           <TextField
-            style={{ width: "100%", marginBottom: "10px" }}
+            style={{ width: "100%", }}
             type="text"
             label="Alamat Toko"
             variant="outlined"
@@ -239,24 +237,6 @@ function ProfilePage() {
             value={shop_address}
           />
           <br />
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <TextField
-              style={{ width: "40%" }}
-              type="text"
-              label="Nama Bank"
-              variant="outlined"
-              onChange={(e) => setShop_bankname(e.target.value)}
-              value={shop_bankname}
-            />
-            <TextField
-              style={{ width: "58%" }}
-              type="text"
-              label="No. Rekening"
-              variant="outlined"
-              onChange={(e) => setShop_banknum(e.target.value)}
-              value={shop_banknum}
-            />
-          </div>
           <br />
           <Button
             variant="contained"
@@ -264,13 +244,30 @@ function ProfilePage() {
             type="submit"
             style={{
               width: "100%",
-              marginBottom: "10px",
+              marginBottom: "20px",
             }}
           >
             Ubah Profil
           </Button>
-          <div style={{ height: "50px" }} />
         </form>
+        <Divider />
+        <div style={{
+            marginLeft: '20px',
+            marginRight: '20px',
+        }}>
+          {banks.length === 0 ? (
+            <BankAdd para={shop_id}/>
+          ) : (
+            banks.map((data,index)=>(
+              <BankMap para={data}/>
+            ))
+          )}
+
+          {banks.length !== 0 && banks.length < 3 ? (
+            <BankAdd para={shop_id}/>
+          ) : ("")}
+        </div>
+        <div style={{ height: "50px" }} />
         <Snackbar
           open={open}
           autoHideDuration={2000}

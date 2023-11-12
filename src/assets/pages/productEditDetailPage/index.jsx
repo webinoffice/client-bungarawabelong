@@ -7,6 +7,10 @@ import { useState } from "react";
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate, useLocation } from 'react-router-dom';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 function ProductEditDetailPage() {
     const location = useLocation();
@@ -25,6 +29,9 @@ function ProductEditDetailPage() {
         setImage(URL.createObjectURL(uploaded));
         setSaveImage(uploaded);
     }
+    const handleChange = (event) => {
+        setTipe(event.target.value);
+    };
 
     const updateNonPic = async () => {
         try {
@@ -239,8 +246,21 @@ function ProductEditDetailPage() {
                     onChange={e => setHarga1(e.target.value)}
                 />
                 <br />
+                <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">Tipe Bunga</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={tipe}
+                            label="Tipe Bunga"
+                            onChange={handleChange}
+                        >
+                        <MenuItem value={'Bucket Bunga'}>Bucket Bunga</MenuItem>
+                        <MenuItem value={'Bunga Papan'}>Bunga Papan</MenuItem>
+                    </Select>
+                </FormControl>
                 <Button variant="contained" color="primary" type='submit' style={{
-                    width: "100%", marginBottom: "10px" 
+                    width: "100%", marginBottom: "10px" , marginTop: '10px'
                 }}>
                     Perbarui Produk
                 </Button>
