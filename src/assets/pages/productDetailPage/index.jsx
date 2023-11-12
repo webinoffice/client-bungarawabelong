@@ -164,7 +164,7 @@ function ProductDetailPage() {
           justifyContent: "space-between",
           margin: "20px",
           marginTop: "10px",
-          marginBottom: "10px",
+          marginBottom: "2px",
         }}
       >
         <Typography
@@ -216,8 +216,7 @@ function ProductDetailPage() {
           marginRight: "20px",
         }}
       >
-        Harga Berkisar di Rp. {formatRupiah(location.state.para.product_price_1)} -{" "}
-        {formatRupiah(location.state.para.product_price_2)}
+        Rp. {formatRupiah(location.state.para.product_price)}
       </Typography>
       <Divider />
       <Typography

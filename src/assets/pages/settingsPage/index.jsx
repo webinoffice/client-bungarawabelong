@@ -13,12 +13,20 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import jwt_decode from "jwt-decode";
+import ListItemIcon from '@mui/material/ListItemIcon';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import Divider from '@mui/material/Divider';
 
 const step = 2;
 function SettingsPage() {
     const [produk, setProduk] = useState([]);
     const [isLogin, setIsLogin] = useState("");
     const navigate = useNavigate();
+
+    const logout = async () => {
+        navigate("/land");
+        await axios.delete("http://localhost:8081/logout");
+      };
 
     const grabHandler = async () => {
       try {
@@ -34,8 +42,10 @@ function SettingsPage() {
         grabHandler();
     }, []);
 
-    return (
-        isLogin !== "" ? 
+    console.log(isLogin)
+
+    return(
+        isLogin !== "" && isLogin !== 2 ? 
         (<div className={css.topPallete}>
             <SearchAppBar/>
             <Typography gutterBottom sx={{
@@ -44,12 +54,59 @@ function SettingsPage() {
                 maxWidth: '500px',
                 margin: 2
             }}>
-                Pengaturan  
+                Pengaturan
             </Typography>
             <SettingsMenu para = {isLogin}/>
             <NavigationBar para={step}/>
         </div>) : 
+        
+        isLogin === 2 ?
         (<div className={css.topPallete}>
+            <SearchAppBar/>
+            <Typography gutterBottom sx={{
+                fontWeight:"bold", 
+                fontSize: 22,
+                maxWidth: '500px',
+                margin: 2
+            }}>
+                Pengaturan
+            </Typography>
+            <Box sx={{ maxWidth: 500, bgcolor: "background.paper" }}>
+                <nav aria-label="main mailbox folders">
+                    <List>
+                    <ListItem disablePadding>
+                        <ListItemButton
+                        onClick={() => navigate("/notification-all")}
+                        >
+                        <ListItemIcon>
+                            <NotificationsActiveIcon color="primary" />
+                        </ListItemIcon>
+                        <ListItemText
+                            primary="Lihat Semua Pesanan"
+                            sx={{
+                            fontWeight: "bold",
+                            fontSize: 20,
+                            }}
+                        />
+                        </ListItemButton>
+                    </ListItem>
+                    </List>
+                </nav>
+                <Divider />
+                <nav aria-label="secondary mailbox folders">
+                    <List>
+                    <ListItem disablePadding>
+                        <ListItemButton onClick={() => logout()}>
+                        <ListItemText primary="Keluar Akun" />
+                        </ListItemButton>
+                    </ListItem>
+                    </List>
+                </nav>
+                </Box>
+            <NavigationBar para={step}/>
+        </div>)
+
+        : (<div className={css.topPallete}>
             <SearchAppBar/>
             <Typography gutterBottom sx={{
                 fontWeight:"bold", 
@@ -74,5 +131,5 @@ function SettingsPage() {
         </div>)
     );
 }
-
 export default SettingsPage;
+﻿

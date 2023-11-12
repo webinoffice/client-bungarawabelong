@@ -20,6 +20,7 @@ import {
 import ProductSearchPage from './assets/pages/productSearchPage';
 import ProductEditPage from './assets/pages/productEditPage';
 import ProductEditDetailPage from './assets/pages/productEditDetailPage';
+import NotificationAllPage from './assets/pages/notificationAllPage';
 
 
 const theme = createTheme({
@@ -63,6 +64,7 @@ function App() {
           <Route path="/edit-product" element={<ProductEditPage/>}/>
           <Route path="/edit-product/detail" element={<ProductEditDetailPage/>}/>
           <Route path="/notification" element={<NotificationPage/>}/>
+          <Route path="/notification-all" element={<NotificationAllPage/>}/>
 
         </Routes>
       </HashRouter>

@@ -15,8 +15,7 @@ function ProductEditDetailPage() {
     const [saveImage, setSaveImage] = useState(null);
 
     const [nama, setNama] = useState(location.state.product_name);
-    const [harga1, setHarga1] = useState(location.state.product_price_1);
-    const [harga2, setHarga2] = useState(location.state.product_price_2);
+    const [harga1, setHarga1] = useState(location.state.product_price);
     const [tipe,setTipe] = useState(location.state.product_type);
     const [deskripsi, setDeskripsi] = useState(location.state.product_description);
     const navigate = useNavigate();
@@ -31,8 +30,7 @@ function ProductEditDetailPage() {
         try {
             await axios.post("http://localhost:8081/updateproductwithoutpic", {
                 product_name: nama,
-                product_price_1: harga1,
-                product_price_2: harga2,
+                product_price: harga1,
                 product_type: tipe,
                 product_description: deskripsi,
                 product_id: location.state.product_id,
@@ -51,8 +49,7 @@ function ProductEditDetailPage() {
             handleClick();
             const formData = new FormData();
             formData.append("product_name", nama);
-            formData.append("product_price_1", harga1);
-            formData.append("product_price_2", harga2);
+            formData.append("product_price", harga1);
             formData.append("product_type", tipe);
             formData.append("product_description", deskripsi);
             formData.append("product_id", location.state.product_id);
@@ -105,14 +102,26 @@ function ProductEditDetailPage() {
     return ( 
         <div className={css.topPallete}> 
             <PageAppBar/>
-            <Typography gutterBottom sx={{
-                fontWeight:"bold", 
-                fontSize: 22,
-                maxWidth: '500px',
-                margin: 2
-            }}>
-                Edit {location.state.product_name}
-            </Typography>
+            {location.state.product_status === 'Aktif' ? (
+                <Typography gutterBottom sx={{
+                    fontWeight:"bold", 
+                    fontSize: 22,
+                    maxWidth: '500px',
+                    margin: 2
+                }}>
+                    Edit {location.state.product_name}
+                </Typography>
+            ):(
+                <Typography gutterBottom sx={{
+                    fontWeight:"bold", 
+                    fontSize: 22,
+                    maxWidth: '500px',
+                    margin: 2,
+                    color: 'red',
+                }}>
+                    Edit {location.state.product_name}
+                </Typography>
+            )}
             <div style={{
                 width: '100%'
             }}>
@@ -144,6 +153,55 @@ function ProductEditDetailPage() {
                 </label> 
             </div>
             <Divider/>
+            <div style={{
+                display: 'flex', 
+                justifyContent: 'space-between',
+                marginLeft: '20px',
+                marginRight: '20px'
+            }}>
+                <Typography sx={{
+                    marginTop: '10px',
+                    fontSize: '14px'
+                }}>
+                    Status Produk: {location.state.product_status}
+                </Typography>
+                {location.state.product_status === 'Aktif' ? (
+                    <Button variant="contained" color="merah" component="span" onClick={() => {
+                        axios.post(
+                        "http://localhost:8081/productstatus/", {
+                            product_id: location.state.product_id,
+                            product_status: location.state.product_status,
+                        }
+                    );
+                    navigate(-1);
+                    }} style={{
+                        height: '23px',
+                        marginTop: "10px",
+                        marginBottom: "10px",
+                        fontSize: '12px',
+                        color: 'white'
+                    }}>
+                        Nonaktifkan Produk
+                    </Button>
+                ):(
+                    <Button variant="contained" color="primary" component="span" onClick={() => {
+                        axios.post(
+                        "http://localhost:8081/productstatus/", {
+                            product_id: location.state.product_id,
+                            product_status: location.state.product_status,
+                        }
+                    );
+                    navigate(-1);
+                    }} style={{
+                        height: '23px',
+                        marginTop: "10px",
+                        marginBottom: "10px",
+                        fontSize: '12px',
+                    }}>
+                        Aktifkan Produk
+                    </Button>
+                )}
+            </div>
             <form onSubmit={uploadImage} style={{
                 marginBottom: 'auto',
                 marginTop: '10px',
@@ -170,25 +228,16 @@ function ProductEditDetailPage() {
                     onChange={e => setDeskripsi(e.target.value)}
                 />
                 <br />
-                <div style={{display:'flex', justifyContent: "space-between"}}>
-                    <TextField
-                        style={{ width: "44%" }}
-                        type="text"
-                        label="Kisaran Harga"
-                        variant="outlined"
-                        defaultValue={location.state.product_price_1}
-                        onChange={e => setHarga1(e.target.value)}
-                    />
-                    <span sty>-</span>
-                    <TextField
-                        style={{ width: "44%" }}
-                        type="text"
-                        label="Kisaran Harga"
-                        variant="outlined"
-                        defaultValue={location.state.product_price_2}
-                        onChange={e => setHarga2(e.target.value)}
-                    />
-                </div>
+                <TextField
+                    style={{ width: "100%", marginBottom: "10px"}}
+                    type="text"
+                    label="Harga Produk"
+                    variant="outlined"
+                    multiline
+                    minRows={1}
+                    defaultValue={location.state.product_price}
+                    onChange={e => setHarga1(e.target.value)}
+                />
                 <br />
                 <Button variant="contained" color="primary" type='submit' style={{
                     width: "100%", marginBottom: "10px" 

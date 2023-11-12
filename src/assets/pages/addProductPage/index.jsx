@@ -15,7 +15,6 @@ function AddProductPage() {
     const [nama, setNama] = useState("");
     const [deskripsi, setDeskripsi] = useState("");
     const [harga1, setHarga1] = useState("");
-    const [harga2, setHarga2] = useState("");
     const navigate = useNavigate();
 
     function handleUploadChange(e){
@@ -32,8 +31,7 @@ function AddProductPage() {
             handleClick();
             const formData = new FormData();
             formData.append("product_name", nama);
-            formData.append("product_price_1", harga1);
-            formData.append("product_price_2", harga2);
+            formData.append("product_price", harga1);
             formData.append("product_type", "Bucket Bunga");
             formData.append("product_description", deskripsi);
             formData.append("shop_id", location.state);
@@ -149,23 +147,15 @@ function AddProductPage() {
                     onChange={e => setDeskripsi(e.target.value)}
                 />
                 <br />
-                <div style={{display:'flex', justifyContent: "space-between"}}>
-                    <TextField
-                        style={{ width: "44%" }}
-                        type="text"
-                        label="Kisaran Harga"
-                        variant="outlined"
-                        onChange={e => setHarga1(e.target.value)}
-                    />
-                    <span sty>-</span>
-                    <TextField
-                        style={{ width: "44%" }}
-                        type="text"
-                        label="Kisaran Harga"
-                        variant="outlined"
-                        onChange={e => setHarga2(e.target.value)}
-                    />
-                </div>
+                <TextField
+                    style={{ width: "100%", marginBottom: "10px"}}
+                    type="text"
+                    label="Harga Produk"
+                    variant="outlined"
+                    multiline
+                    minRows={1}
+                    onChange={e => setHarga1(e.target.value)}
+                />
                 <br />
                 <Button variant="contained" color="primary" type='submit' style={{
                     width: "100%", marginBottom: "10px" 

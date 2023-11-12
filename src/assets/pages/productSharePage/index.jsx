@@ -127,7 +127,7 @@ function ProductSharePage() {
           justifyContent: "space-between",
           margin: "20px",
           marginTop: "10px",
-          marginBottom: "10px",
+          marginBottom: "2px",
           textAlign: "center",
         }}
       >
@@ -157,8 +157,7 @@ function ProductSharePage() {
           marginRight: "20px",
         }}
       >
-        Harga Berkisar di Rp. {product[0].product_price_1} -{" "}
-        {product[0].product_price_2}
+        Rp. {product[0].product_price}
       </Typography>
       <Divider />
       <Typography
