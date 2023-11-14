@@ -13,6 +13,7 @@ import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useState } from 'react';
+import {API} from '../../config/api.js';
 
 export default function SettingsMenu({ para }) {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ export default function SettingsMenu({ para }) {
 
   const logout = async () => {
     navigate("/land");
-    await axios.delete("http://localhost:8081/logout");
+    await API.delete("logout");
   };
 
   return (

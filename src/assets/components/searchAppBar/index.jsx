@@ -9,6 +9,7 @@ import InputBase from '@mui/material/InputBase';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
+import {API} from '../../config/api.js';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -57,7 +58,7 @@ export default function SearchAppBar() {
   const handleKeyDown = async (e) => {
     if (e.key === 'Enter') {
       try {
-        const response = await axios.get("http://localhost:8081/search/"+value);
+        const response = await API.get("search/"+value);
         setProductSearch(response.data);
         navigate('/product/'+value, {state: response.data});
       } catch (error) {

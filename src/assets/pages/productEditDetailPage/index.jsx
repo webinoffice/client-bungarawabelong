@@ -11,6 +11,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import {API} from '../../config/api.js';
 
 function ProductEditDetailPage() {
     const location = useLocation();
@@ -35,7 +36,7 @@ function ProductEditDetailPage() {
 
     const updateNonPic = async () => {
         try {
-            await axios.post("http://localhost:8081/updateproductwithoutpic", {
+            await API.post("updateproductwithoutpic", {
                 product_name: nama,
                 product_price: harga1,
                 product_type: tipe,
@@ -63,8 +64,8 @@ function ProductEditDetailPage() {
             formData.append("product_image", saveImage);
             formData.append("oldImage", oldImage.split("/").pop());
             
-            axios
-            .post("http://localhost:8081/updateproduct", formData, {
+            API
+            .post("updateproduct", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
@@ -174,8 +175,8 @@ function ProductEditDetailPage() {
                 </Typography>
                 {location.state.product_status === 'Aktif' ? (
                     <Button variant="contained" color="merah" component="span" onClick={() => {
-                        axios.post(
-                        "http://localhost:8081/productstatus/", {
+                        API.post(
+                        "productstatus/", {
                             product_id: location.state.product_id,
                             product_status: location.state.product_status,
                         }
@@ -192,8 +193,8 @@ function ProductEditDetailPage() {
                     </Button>
                 ):(
                     <Button variant="contained" color="primary" component="span" onClick={() => {
-                        axios.post(
-                        "http://localhost:8081/productstatus/", {
+                        API.post(
+                        "productstatus/", {
                             product_id: location.state.product_id,
                             product_status: location.state.product_status,
                         }

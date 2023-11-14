@@ -7,13 +7,14 @@ import axios from 'axios';
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
 import { IconButton } from '@mui/material';
+import {API} from '../../config/api.js';
 
 function BankMap({para}) {
     const [bankName,setBankName] = useState(para.bank_name);
     const [bankNum,setBankNum] = useState(para.bank_number);
 
     const bankUpdate = async () => (
-        await axios.post('http://localhost:8081/bankupdate', {
+        await API.post('bankupdate', {
             bank_name: bankName,
             bank_number: bankNum,
             bank_id: para.bank_id,
@@ -21,7 +22,7 @@ function BankMap({para}) {
     )
 
     const bankDelete = async () => {
-        await axios.delete('http://localhost:8081/bankdelete/' + para.bank_id)
+        await API.delete('bankdelete/' + para.bank_id)
         window.location.reload();
     }
 

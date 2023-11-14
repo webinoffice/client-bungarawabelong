@@ -9,6 +9,7 @@ import jwt_decode from 'jwt-decode';
 import CloseIcon from "@mui/icons-material/Close";
 import BankMap from '../../components/bankMap';
 import BankAdd from '../../components/bankAdd';
+import {API} from '../../config/api.js';
 
 
 function ProfilePage() {
@@ -25,7 +26,7 @@ function ProfilePage() {
 
     const refreshToken = async () => {
       try {
-        const response = await axios.get("http://localhost:8081/refreshtoken");
+        const response = await API.get("refreshtoken");
         const decoded = jwt_decode(response.data.accessToken);
         setShop_id(decoded.shop_id);
         setShop_name(decoded.shop_name);
@@ -49,8 +50,8 @@ function ProfilePage() {
       e.preventDefault();
       handleClick();
         if(!update_profile) {
-            axios
-              .post("http://localhost:8081/updateshopwithoutpic", {
+            API
+              .post("updateshopwithoutpic", {
                 shop_id: shop_id,
                 shop_name: shop_name,
                 shop_description: shop_description,
@@ -76,8 +77,8 @@ function ProfilePage() {
             formData.append("shop_id", shop_id);
             formData.append("oldImage", oldImage.split("/").pop());
 
-            axios
-              .post("http://localhost:8081/updateshop", formData, {
+            API
+              .post("updateshop", formData, {
                 headers: {
                   "Content-Type": "multipart/form-data",
                 },

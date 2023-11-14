@@ -17,6 +17,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
+import {API} from '../../config/api.js';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -40,7 +41,7 @@ function ProductSharePage() {
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
-            const response = await axios.post('http://localhost:8081/createtransaction', {
+            const response = await API.post('createtransaction', {
                 product_id: product[0].product_id,
                 transaction_description: desc,
                 transaction_name: nama,
@@ -82,7 +83,7 @@ function ProductSharePage() {
     useEffect(()=>{
         const getProduct = async () => {
             try {
-              const response = await axios.get("http://localhost:8081/productbyproductid/" + product_id);
+              const response = await API.get("productbyproductid/" + product_id);
               setProduct(response.data);
             } catch (error) {
               console.error("Error fetching data:", error);

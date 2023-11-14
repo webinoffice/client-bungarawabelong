@@ -8,6 +8,7 @@
     import { CardActionArea } from '@mui/material';
     import axios from 'axios';
     import { useNavigate } from 'react-router-dom';
+    import {API} from '../../config/api.js';
 
     function ShopMap({props}) {
       const [produk, setProduk] = useState([]);
@@ -16,8 +17,8 @@
       useEffect(() => {
         const grabHandler = async () => {
           try {
-            const response = await axios.get(
-              "http://localhost:8081/productbyshopid/" + props.shop_id
+            const response = await API.get(
+              "productbyshopid/" + props.shop_id
             );
             setProduk(response.data);
           } catch (error) {

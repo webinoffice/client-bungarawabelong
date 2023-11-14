@@ -20,6 +20,7 @@ import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
 import ShareIcon from '@mui/icons-material/Share';
 import Cookies from 'js-cookie';
+import {API} from '../../config/api.js';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -46,7 +47,7 @@ function ProductDetailPage() {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      const response = await axios.post('http://localhost:8081/createtransaction', {
+      const response = await API.post('createtransaction', {
         product_id: location.state.para.product_id,
         transaction_description: desc,
         transaction_name: nama,
