@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import {API} from '../../config/api.js';
 
 function ProductSearchMap({location}) {
   const [produk, setProduk] = useState([]);
@@ -16,7 +17,7 @@ function ProductSearchMap({location}) {
   useEffect(() => {
     const grabHandler = async () => {
       try {
-        const response = await axios.get("http://localhost:8081/productall");
+        const response = await API.get("productall");
         setProduk(response.data);
         console.log(response.data);
       } catch (error) {

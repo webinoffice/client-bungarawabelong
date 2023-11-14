@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
+import {API} from '../../config/api.js';
 
 
 function LoginPage() {
@@ -16,7 +17,7 @@ function LoginPage() {
     const isLogin = async (e) => {
         try {
             e.preventDefault();
-            const response = await axios.post("http://localhost:8081/islogin");
+            const response = await API.post("islogin");
             if (response.data.accessToken) {
                 handleClick();
             } else {
@@ -35,7 +36,7 @@ function LoginPage() {
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
-            const response = await axios.post("http://localhost:8081/login", {
+            const response = await API.post("login", {
               shop_email: email,
               shop_password: password,
             });

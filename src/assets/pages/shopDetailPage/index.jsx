@@ -18,6 +18,7 @@ import { IconButton } from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
 import axios from 'axios';
+import {API} from '../../config/api.js';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -27,7 +28,7 @@ function ShopDetailPage() {
     useEffect(()=>{
         const getProduct = async () => {
             try {
-              const response = await axios.get("http://localhost:8081/getshopbyid/" + shop_id);
+              const response = await API.get("getshopbyid/" + shop_id);
               setProduct(response.data);
             } catch (error) {
               console.error("Error fetching data:", error);

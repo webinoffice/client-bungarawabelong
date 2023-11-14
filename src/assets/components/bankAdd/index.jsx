@@ -8,13 +8,14 @@ import axios from 'axios';
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
 import { IconButton } from '@mui/material';
+import {API} from '../../config/api.js';
 
 function BankAdd({para}) {
     const [bankName,setBankName] = useState('');
     const [bankNum,setBankNum] = useState('');
 
     const bankAdd = async () => (
-        await axios.post('http://localhost:8081/bankcreate', {
+        await API.post('bankcreate', {
             bank_name: bankName,
             bank_number: bankNum,
             shop_id: para,

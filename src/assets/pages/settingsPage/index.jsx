@@ -16,6 +16,7 @@ import jwt_decode from "jwt-decode";
 import ListItemIcon from '@mui/material/ListItemIcon';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import Divider from '@mui/material/Divider';
+import {API} from '../../config/api.js';
 
 const step = 2;
 function SettingsPage() {
@@ -25,12 +26,12 @@ function SettingsPage() {
 
     const logout = async () => {
         navigate("/land");
-        await axios.delete("http://localhost:8081/logout");
+        await API.delete("logout");
       };
 
     const grabHandler = async () => {
       try {
-        const response = await axios.get("http://localhost:8081/islogin");
+        const response = await API.get("islogin");
         const decoded = jwt_decode(response.data.accessToken);
         setIsLogin(decoded.shop_id);
       } catch (error) {

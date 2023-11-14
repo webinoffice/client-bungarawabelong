@@ -9,6 +9,7 @@ import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Box from '@mui/material/Box';
+import {API} from '../../config/api.js';
 
 export default function NotificationList() {
   const [saveImage, setSaveImage] = useState(null);
@@ -16,11 +17,16 @@ export default function NotificationList() {
   const location = useLocation();
   const [transaksi, setTransaksi] = useState([]);
   const navigate = useNavigate();
+  // const currentDate = new Date();
+  // // const salesDate = new Date(location.state.sales_date);
+  // const timeDifference = currentDate - salesDate;
+  // const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+  // const maxDays = 14;
 
   useEffect(() => {
     const grabHandler = async () => {
       try {
-        const response = await axios.get("http://localhost:8081/gettransactionbyshopid/" + location.state);
+        const response = await API.get("gettransactionbyshopid/" + location.state);
         setTransaksi(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -45,8 +51,8 @@ export default function NotificationList() {
       formData.append("transaction_id", id);
       formData.append("transaction_proof", saveImage);
     
-      axios
-      .post("http://localhost:8081/updatetransaction", formData, {
+      API
+      .post("updatetransaction", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -160,7 +166,7 @@ export default function NotificationList() {
                   color: 'white',
                   width: '49%'
                 }} onClick={()=>{
-                  axios.post('http://localhost:8081/updatetrans', {
+                  API.post('updatetrans', {
                     transaction_status: 'Completed',
                     transaction_id: data.transaction_id,
                   })
@@ -202,7 +208,7 @@ export default function NotificationList() {
                   color: 'white',
                   width: '49%'
                 }} onClick={()=>{
-                  axios.post('http://localhost:8081/updatetrans', {
+                  API.post('updatetrans', {
                     transaction_status: 'Dikirim',
                     transaction_id: data.transaction_id,
                   })
@@ -310,8 +316,8 @@ export default function NotificationList() {
                   variant="contained"
                   color="error"
                   onClick={() => {
-                    axios.post(
-                      "http://localhost:8081/canceltransaction/" +
+                    API.post(
+                      "canceltransaction/" +
                         data.transaction_id
                     );
                     window.location.reload();

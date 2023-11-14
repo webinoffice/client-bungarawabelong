@@ -12,6 +12,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import {API} from '../../config/api.js';
 
 function AddProductPage() {
     const location = useLocation();
@@ -46,8 +47,8 @@ function AddProductPage() {
             formData.append("shop_id", location.state);
             formData.append("product_image", saveImage);
             
-            axios
-            .post("http://localhost:8081/createproduct", formData, {
+            API
+            .post("createproduct", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },

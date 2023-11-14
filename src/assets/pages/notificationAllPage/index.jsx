@@ -8,13 +8,14 @@ import Button from '@mui/material/Button';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState,useEffect } from 'react';
 import axios from 'axios';
+import {API} from '../../config/api.js';
 
 function NotificationAllPage() {
   const [transaksi, setTransaksi] = useState([]);
     useEffect(() => {
         const grabHandler = async () => {
           try {
-            const response = await axios.get("http://localhost:8081/gettransactionall");
+            const response = await API.get("gettransactionall");
             setTransaksi(response.data);
           } catch (error) {
             console.error("Error fetching data:", error);
