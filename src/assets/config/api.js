@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const API = axios.create({
-    baseURL: "http://localhost:8081/"
+    baseURL: "http://45.9.191.59:8080/"
 })
 
 // export const setAuthToken = (token) => {
